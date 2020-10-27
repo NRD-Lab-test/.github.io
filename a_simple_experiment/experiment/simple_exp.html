@@ -1,0 +1,120 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <style>
+              .gate {
+            margin:0px;
+            width:60px;
+            height:60px;
+            background-color:red;
+            position: absolute;
+            top:0px;
+            left:0px;
+            border-radius:50%;
+            border: transparent;
+            fill: red;
+        }
+  </style>
+</head>
+
+<body>
+<script>function send_csv_file(obj){
+    SID=getCookie("id");
+    exp_name=getCookie("exp");
+    console.log(SID)
+    console.log(exp_name)
+    csv_name_to_send=csv_name(exp_name,SID);
+    csv_file=CsvFormatting(obj);
+    send_csv("http://ec2-3-21-100-180.us-east-2.compute.amazonaws.com:3000",csv_name_to_send,csv_file);};
+
+  function csv_name(exp_name,SID){
+    return String(exp_name)+"-"+String(SID)+".csv"
+  };
+
+  function send_csv(server_loc, csv_name,csv_file){
+  var url=new Blob([csv_file], { type: 'text/csv;charset=utf-8;' });
+  console.log(url)
+  var fd=new FormData();
+  fd.append("upl",url,csv_name);
+  fetch(server_loc,{
+  method:"POST",
+  body: fd})
+  .then((response)=>{
+    responded=response.json();
+    window.location.href="../debrief/debrief.html"
+  console.log(responded)})
+  .catch((error)=>{
+    console.error("error:",error)
+  })};
+
+  function CsvFormatting(obj){
+    var stringline='';
+    var number_of_times=obj[Object.keys(obj)[0]].length;
+    var keys = Object.keys(obj);
+    var completeString=[]
+    var stringToAdd='';
+    for (var k=0; k<keys.length; k++){
+        if (k==keys.length-1){
+            stringToAdd+='"'+keys[k]+'"'
+        }else{
+            stringToAdd+='"'+keys[k]+'",';}
+        }
+    stringToAdd+="\n";
+    completeString.push(stringToAdd);
+    stringToAdd='';
+    for (var i=0; i<number_of_times; i++){
+        stringToAdd=''
+        for (var j=0; j<keys.length; j++){
+            if (j==keys.length-1){
+                stringToAdd+='"'+JSON.stringify(obj[keys[j]][i])+'"';
+            }
+            else{
+                stringToAdd+='"'+JSON.stringify(obj[keys[j]][i])+'",';
+            };
+        };
+    completeString.push(stringToAdd);
+    };
+    var csv=completeString.join("\n");
+    return csv
+    };
+
+  function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(',');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}</script>
+Welcome to a really simple "experiment"
+<button id="click1" onclick="trial()">next_trial</button>
+
+<script>
+experiment_counter={trial:0,max_trials:5,done:false}
+csv_data_object={trial:[],data:[]}
+function trial(){
+    csv_data_object.trial.push(experiment_counter.trial)
+    csv_data_object.data.push(Math.random())
+    experiment_counter.trial+=1
+    console.log(csv_data_object)
+    if (experiment_counter.trial==experiment_counter.max_trials && !experiment_counter.done){
+        console.log("data_prepped")
+        experiment_counter.done=true        
+        data_out_to_server=csv_data_object
+send_csv_file(data_out_to_server)
+    }
+}
+</script>
+</body>
+</html>

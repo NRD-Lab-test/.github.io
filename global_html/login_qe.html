@@ -72,7 +72,7 @@
                     <label for="inputGroupSelect05">Experiment</label>
                     <select class="custom-select" id="Experiment_chosen">
                       <option selected>Choose...</option>
-                      <option value="A_New_Exp">A_New_Exp</option>                      <option value="dualGate10_exp">dualGate10_exp</option>                      <option value="dualGate4_exp">dualGate4_exp</option>                      <option value="a_simple_exp">a_simple_exp</option>
+                      <option value="a_simple_experiment">a_simple_experiment</option>
                       <option value="Cookie Tester">Cookie Tester</option>
                     </select>
                   </div>
@@ -122,22 +122,10 @@
 
     document.cookie="register_loc=qe , exp="+exp+" , id="+responded.SID+" , email="+responded.email+"; path=/"
     //addition_of_experiments
-    //A_New_Exp_start_redirect
-    if (exp=="A_New_Exp")
-    {location.href = "../A_New_Exp/consent/consent.html"};
-     //A_New_Exp_end_redirect
-    //dualGate10_exp_start_redirect
-    if (exp=="dualGate10_exp")
-    {location.href = "../dualGate10_exp/consent/consent.html"};
-     //dualGate10_exp_end_redirect
-    //dualGate4_exp_start_redirect
-    if (exp=="dualGate4_exp")
-    {location.href = "../dualGate4_exp/consent/consent.html"};
-     //dualGate4_exp_end_redirect
-    //a_simple_exp_start_redirect
-    if (exp=="a_simple_exp")
-    {location.href = "../a_simple_exp/consent/consent.html"};
-     //a_simple_exp_end_redirect
+    //a_simple_experiment_start_redirect
+    if (exp=="a_simple_experiment")
+    {location.href = "../a_simple_experiment/consent/consent.html"};
+     //a_simple_experiment_end_redirect
 
     //cookie_task_start_redirect
     if (exp=="Cookie Tester"){
