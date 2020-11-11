@@ -72,7 +72,7 @@
                     <label for="inputGroupSelect05">Experiment</label>
                     <select class="custom-select" id="Experiment_chosen">
                       <option selected>Choose...</option>
-                      <option value="A_crazy_experiment">A_crazy_experiment</option>
+                      <option value="A_crazy_experiment">A_crazy_experiment</option>                      <option value="A_crazy_experiment">A_crazy_experiment</option>
                       <option value="Cookie Tester">Cookie Tester</option>
                     </select>
                   </div>
@@ -122,6 +122,10 @@
 
     document.cookie="register_loc=qe , exp="+exp+" , id="+responded.SID+" , email="+responded.email+"; path=/"
     //addition_of_experiments
+    //A_crazy_experiment_start_redirect
+    if (exp=="A_crazy_experiment")
+    {location.href = "../A_crazy_experiment/consent/consent.html"};
+     //A_crazy_experiment_end_redirect
     //A_crazy_experiment_start_redirect
     if (exp=="A_crazy_experiment")
     {location.href = "../A_crazy_experiment/consent/consent.html"};
