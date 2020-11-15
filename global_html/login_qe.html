@@ -72,7 +72,7 @@
                     <label for="inputGroupSelect05">Experiment</label>
                     <select class="custom-select" id="Experiment_chosen">
                       <option selected>Choose...</option>
-                      <option value="Another_great_exp">Another_great_exp</option>                      <option value="bigpackage">bigpackage</option>                      <option value="hello_world">hello_world</option>                      <option value="Once_More">Once_More</option>
+                      <option value="Once_More">Once_More</option>                      <option value="Once_Donce">Once_Donce</option>
                       <option value="Cookie Tester">Cookie Tester</option>
                     </select>
                   </div>
@@ -122,22 +122,14 @@
 
     document.cookie="register_loc=qe , exp="+exp+" , id="+responded.SID+" , email="+responded.email+"; path=/"
     //addition_of_experiments
-    //Another_great_exp_start_redirect
-    if (exp=="Another_great_exp")
-    {location.href = "../Another_great_exp/consent/consent.html"};
-     //Another_great_exp_end_redirect
-    //bigpackage_start_redirect
-    if (exp=="bigpackage")
-    {location.href = "../bigpackage/consent/consent.html"};
-     //bigpackage_end_redirect
-    //hello_world_start_redirect
-    if (exp=="hello_world")
-    {location.href = "../hello_world/consent/consent.html"};
-     //hello_world_end_redirect
     //Once_More_start_redirect
     if (exp=="Once_More")
     {location.href = "../Once_More/consent/consent.html"};
      //Once_More_end_redirect
+    //Once_Donce_start_redirect
+    if (exp=="Once_Donce")
+    {location.href = "../Once_Donce/consent/consent.html"};
+     //Once_Donce_end_redirect
 
 }
 
