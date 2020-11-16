@@ -72,7 +72,7 @@
                     <label for="inputGroupSelect05">Experiment</label>
                     <select class="custom-select" id="Experiment_chosen">
                       <option selected>Choose...</option>
-                      <option value="CNAME">CNAME</option>                      <option value="HAPPY">HAPPY</option>                      <option value="HELOOOOo">HELOOOOo</option>                      <option value="Once_Donce">Once_Donce</option>                      <option value="Once_More">Once_More</option>                      <option value="hweeeee">hweeeee</option>                      <option value="A_big_world">A_big_world</option>
+                      <option value="A_big_world">A_big_world</option>                      <option value="CNAME">CNAME</option>                      <option value="HELOOOOo">HELOOOOo</option>                      <option value="Once_Donce">Once_Donce</option>                      <option value="Once_More">Once_More</option>                      <option value="hweeeee">hweeeee</option>                      <option value="how_abbbb">how_abbbb</option>
                       <option value="Cookie Tester">Cookie Tester</option>
                     </select>
                   </div>
@@ -109,7 +109,7 @@
     var email=input_email
     var exp=input_exp
     console.log("hi")
-    fetch('http://ec2-3-21-100-180.us-east-2.compute.amazonaws.com:3001',{
+    fetch('http://server.nrdlab.org:3001',{
     headers: { "Content-Type": "application/json" },
     method:"POST",
     body: JSON.stringify({"email":email,"exp":exp})})
@@ -122,14 +122,14 @@
 
     document.cookie="register_loc=qe , exp="+exp+" , id="+responded.SID+" , email="+responded.email+"; path=/"
     //addition_of_experiments
+    //A_big_world_start_redirect
+    if (exp=="A_big_world")
+    {location.href = "../A_big_world/consent/consent.html"};
+     //A_big_world_end_redirect
     //CNAME_start_redirect
     if (exp=="CNAME")
     {location.href = "../CNAME/consent/consent.html"};
      //CNAME_end_redirect
-    //HAPPY_start_redirect
-    if (exp=="HAPPY")
-    {location.href = "../HAPPY/consent/consent.html"};
-     //HAPPY_end_redirect
     //HELOOOOo_start_redirect
     if (exp=="HELOOOOo")
     {location.href = "../HELOOOOo/consent/consent.html"};
@@ -146,10 +146,10 @@
     if (exp=="hweeeee")
     {location.href = "../hweeeee/consent/consent.html"};
      //hweeeee_end_redirect
-    //A_big_world_start_redirect
-    if (exp=="A_big_world")
-    {location.href = "../A_big_world/consent/consent.html"};
-     //A_big_world_end_redirect
+    //how_abbbb_start_redirect
+    if (exp=="how_abbbb")
+    {location.href = "../how_abbbb/consent/consent.html"};
+     //how_abbbb_end_redirect
 
 }
 
