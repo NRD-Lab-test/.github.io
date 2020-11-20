@@ -72,7 +72,7 @@
                     <label for="inputGroupSelect05">Experiment</label>
                     <select class="custom-select" id="Experiment_chosen">
                       <option selected>Choose...</option>
-                      <option value="First_Experiment">First_Experiment</option>                      <option value="Everything_is_working">Everything_is_working</option>
+                      <option value="Everything_is_working">Everything_is_working</option>                      <option value="First_Experiment">First_Experiment</option>                      <option value="Little_Labrynth">Little_Labrynth</option>
                       <option value="Cookie Tester">Cookie Tester</option>
                     </select>
                   </div>
@@ -122,14 +122,18 @@
 
     document.cookie="register_loc=qe , exp="+exp+" , id="+responded.SID+" , email="+responded.email+"; path=/"
     //addition_of_experiments
-    //First_Experiment_start_redirect
-    if (exp=="First_Experiment")
-    {location.href = "../First_Experiment/consent/consent.html"};
-     //First_Experiment_end_redirect
     //Everything_is_working_start_redirect
     if (exp=="Everything_is_working")
     {location.href = "../Everything_is_working/consent/consent.html"};
      //Everything_is_working_end_redirect
+    //First_Experiment_start_redirect
+    if (exp=="First_Experiment")
+    {location.href = "../First_Experiment/consent/consent.html"};
+     //First_Experiment_end_redirect
+    //Little_Labrynth_start_redirect
+    if (exp=="Little_Labrynth")
+    {location.href = "../Little_Labrynth/consent/consent.html"};
+     //Little_Labrynth_end_redirect
 
 }
 
