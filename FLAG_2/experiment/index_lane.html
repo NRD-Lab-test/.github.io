@@ -24,7 +24,7 @@
     send_csv('https://boxreroute.nrdlab.org/box',csv_n,csv_file,SID,exp_name);};
 
   function csv_name(exp_name,SID){
-    return String(exp_name)+"-"+String(SID)+".csv"
+    return String(exp_name)+"-"+String(SID)+".json"
   };
 //function send_csv_file(csv_string)
   function send_csv(server_loc, csv_name,csv_file,SID,exp_name){
