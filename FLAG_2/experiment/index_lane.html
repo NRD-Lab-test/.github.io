@@ -547,8 +547,6 @@ window.location.href="../debrief/debrief.html"})
           return trial.block === block;
         })
         //WRITE_LOC_FOR_REFERENCE
-        data_out_to_server=data.csv()
-send_csv_file(data_out_to_server)
         //write_data(data.csv());
         block++;
       }
@@ -616,8 +614,8 @@ send_csv_file(data_out_to_server)
         data = dataset.filterCustom(function(trial){
           return trial.block === block;
         })
-        write_data(data.csv());
-
+        data_out_to_server=JSON.stringify(data)
+        send_csv_file(data_out_to_server)
       }
     }
   }
