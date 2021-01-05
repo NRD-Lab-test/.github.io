@@ -613,7 +613,7 @@ window.location.href="../debrief/debrief.html"})
         data = dataset.filterCustom(function(trial){
           return trial.block === block;
         })
-        data_out_to_server=JSON.stringify(data)
+        data_out_to_server=data.json()
         console.log(data_out_to_server)
         send_csv_file(data_out_to_server)
     }
