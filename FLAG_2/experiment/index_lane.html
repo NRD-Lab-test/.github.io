@@ -605,7 +605,6 @@ window.location.href="../debrief/debrief.html"})
     stimulus: 'This is the end of the experiment!  Thank you for taking part!',
     choices: [32],
     on_start: function(trial) {
-      if ((counter % saveEveryNGames) == 0){
         dataset = jsPsych.data.get();
         dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID});
         dataset = dataset.ignore('internal_node_id');
@@ -616,7 +615,6 @@ window.location.href="../debrief/debrief.html"})
         })
         data_out_to_server=JSON.stringify(data)
         send_csv_file(data_out_to_server)
-      }
     }
   }
   timeline.push(end_screen);
