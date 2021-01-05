@@ -614,6 +614,7 @@ window.location.href="../debrief/debrief.html"})
           return trial.block === block;
         })
         data_out_to_server=JSON.stringify(data)
+        console.log(data_out_to_server)
         send_csv_file(data_out_to_server)
     }
   }
