@@ -29,7 +29,7 @@
         //addition_of_experiments
 var exp='FLAG_4'
     fetch('https://addsubject.nrdlab.org',{
-location.href='../consent/consent.html'
+    headers: { "Content-Type": "application/json" },
     method:"POST",
     body: JSON.stringify({table_name:exp,item:{"email":null,"exp":exp,"register_loc":"sona"}})})
     .then(async(response)=>{
