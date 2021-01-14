@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gambling Task</title>
+    <script src="jspsych-6.1.0/jquery.min.js"></script>
+    <script src="jspsych-6.1.0/jspsych.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-multi-choice.js"></script>
+	  <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+    <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
+    <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  </head>
+  <body></body>
+<script>function send_csv_file(data){
+    var SID=getCookie("id");
+    var exp_name=getCookie("exp");
+    var csv_n=csv_name(exp_name,SID);
+    if (typeof data === 'object' && data !== null){
+      var csv_file=CsvFormatting(data);
+    }else{
+      var csv_file=data
+    }
+    counter={count:0}
+    send_csv('https://boxreroute.nrdlab.org/box',csv_n,csv_file,SID,exp_name);};
+
+  function csv_name(exp_name,SID){
+    return String(exp_name)+"-"+String(SID)+".csv"
+  };
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+//function send_csv_file(csv_string)
+  function send_csv(server_loc, csv_name,csv_file,SID,exp_name){
+  var url=new Blob([csv_file], { type: 'text/csv;charset=utf-8;' });
+  var fd=new FormData();
+  fd.append("upl",url,csv_name);
+  fetch(server_loc,{
+  headers:{authorization:String(exp_name)+";"+String(SID)},
+  method:"POST",
+  body: fd})
+  .then(async(response)=>{
+    responded=await response.json();
+    return responded
+}).then((responded)=>{console.log(responded);
+window.location.href="../debrief/debrief.html"})
+  .catch(async (error)=>{
+    await sleep(200)
+      counter.count+=1
+      if (counter.count<3){
+        send_csv(server_loc,csv_name,csv_file,SID,exp_name)
+    }
+    console.error("error:",error)
+  })};
+
+  function CsvFormatting(obj){
+  var stringline='';
+  var number_of_times=obj[Object.keys(obj)[0]].length;
+  var keys = Object.keys(obj);
+  var completeString=[]
+  var stringToAdd='';
+  for (var k=0; k<keys.length; k++){
+      if (k==keys.length-1){
+          stringToAdd+='"'+keys[k]+'"'
+      }else{
+          stringToAdd+='"'+keys[k]+'",';}
+      }
+  stringToAdd+="\n";
+  completeString.push(stringToAdd);
+  stringToAdd='';
+  for (var i=0; i<number_of_times; i++){
+      stringToAdd=''
+      for (var j=0; j<keys.length; j++){
+          if (j==keys.length-1){
+              stringToAdd+='"'+JSON.stringify(obj[keys[j]][i])+'"';
+          }
+          else{
+              stringToAdd+='"'+JSON.stringify(obj[keys[j]][i])+'",';
+          };
+      };
+  completeString.push(stringToAdd);
+  };
+  var csv=completeString.join("\n");
+  return csv
+  };
+
+  function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(',');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}</script>
+  <script>
+
+
+  // Setup some variables and helper functions
+  var timeline = [];
+  var counter = 0;
+  var block = 1;
+  var saveEveryNGames = 2;
+  var total_decks = 171;
+  var resp;
+  var sID;
+
+
+  function guide(str, color="red"){
+    return "<div style='position: fixed; top: 0; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; border-style: solid; border-color: "+color+"'>"+str+"</div>";
+  }
+  function game_number(){
+    return "<div style='position: fixed; bottom: 0; left: 0%; width:100%; '>Deck number: "+counter+" of "+total_decks +"</div>";
+  }
+
+  /*
+  var inst = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = jsPsych.timelineVariable('str', true);
+    other = jsPsych.timelineVariable('other', true);
+      trial.stimulus = guide(str)+other;
+    }
+  }
+  */
+  /*
+  // Standard Normal variate using Box-Muller transform.
+  function randn_bm(mu, sigma) {
+    var u = 0, v = 0;
+    while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+    while(v === 0) v = Math.random();
+    var X = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v ) * sigma + mu
+    return X;
+  };
+  */
+
+  function card_down(card){
+    return "<div style='float: left; border-style: solid; border-width: 2px; border-color: white; height: 250px; width: 200px;')><img src='"+card+"'></img></div>"
+  }
+  function empty(){
+    return "<div style='float: left; height: 250px; width: 200px;')></div>"
+  }
+  function card_up(r){
+    return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: black; font-size:60px;'')>"+r+"</div>"
+  }
+  function face_card_up(r, card){
+    return "<div style='float: left;z-index: 1; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: black; font-size:60px;'><div style='position: absolute; z-index: -1; background-image: url("+card+"); height: 250px; width: 200px; opacity: 0.4;'></div>"+r+"</div>";
+  }
+  function card_up_grey(r){
+    return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: white; font-size:60px; color:grey; background-color: lightgrey;'')>"+r+"</div>"
+  }
+
+  function left_down(){
+    return card_down()+empty()+empty();
+  }
+  function left_up(r){
+    return card_up(r)+empty()+empty();
+  }
+  function right_down(){
+    return empty()+empty()+card_down();
+  }
+  function right_up(r){
+    return empty()+empty()+card_up(r);
+  }
+
+
+  // SUBJECT DEMOGRAPHICS
+  var survey_trial = {
+    type: 'survey-text',
+    questions: [
+      {prompt: "Please enter your initials", name: 'Initials'},
+      {prompt: "Please enter your age", name: 'Age'}
+    ],
+    on_finish: function (trial){
+      resp = JSON.parse(trial.responses);
+      sID = jsPsych.randomization.randomID(15);
+      console.log(sID);
+
+    }
+  };
+  timeline.push(survey_trial);
+
+  // INSTRUCTIONS
+  // easier to do instructions like this where we make each slide of instructions
+  var inst1 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'Welcome to the experiment!<br><br>[press any key to continue].';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst2 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'NOTE: This is a pilot experiment for internal testing for the NRDlab and collaborators.';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst3 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'In this experiment you will be playing a card game in which you will make decisions about whether to draw a card to get a random reward or take a known reward for sure.';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst4 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'Here is what such a decision might look like - on the left is a deck of cards, on the right is a fixed offer of 10 points for sure.';
+      trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(10);
+    }
+  }
+  var inst5 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'You will press the f key to choose the option on the left (the deck in this case) and the j key to choose the option on the right (the fixed offer)';
+      trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(10);
+    }
+  }
+  var inst6 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'If you choose the deck you will get whatever the reward is on the card you draw. This reward could be negative or positive.  In this case it was 20 points, so you would earn more than taking the fixed offer in this case.';
+      trial.stimulus = guide(str)+card_up(20)+empty()+card_up_grey(10);
+    }
+  }
+  var inst7 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'In another case the reward might be -50 points, so in this case it would have been better to take the known offer.';
+      trial.stimulus = guide(str)+card_up(-50)+empty()+card_up_grey(10);
+    }
+  }
+  var inst8 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst9 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'To give you information about each deck before you make a choice, we will present you with 5 examples from each deck before you make a choice.  To see these examples you will press the SPACE BAR key.';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst10 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'Finally, to give you an extra hint about the deck, instead of showing you the back of a playing card, we will show you a picture of the person who made each deck.  Each person was a participant, a member of the public, that came into our lab. This may give you a clue as to whether this person is trustworthy or not.';
+      trial.stimulus = guide(str)+card_down("../img/faces/007_m_m_d_b.png" );
+    }
+  }
+  var inst11 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'The experiment should take about 30 minutes to complete.  When you are ready to begin we will try an example game to make sure everything makes sense.';
+      trial.stimulus = guide(str);
+    }
+  }
+
+  var instructions = {
+    timeline: [inst1, inst2, inst3, inst4, inst5, inst6, inst7, inst8, inst9, inst10, inst11],
+  }
+  timeline.push(instructions);
+
+
+  // TRIALS
+  // trial component 1: new game
+  var trial_new_game = {
+    type: 'html-keyboard-response',
+    stimulus: "hi",
+    trial_duration: 1000,
+    data: {
+      block: null,
+      type: 'NewDeck',
+    },
+    choices: jsPsych.NO_KEYS,
+    on_start: function(trial){
+      var practice = jsPsych.timelineVariable('practice',  true);
+      var card = jsPsych.timelineVariable('card',  true);
+      var str = 'This text appears each time there is a new deck made by the person who\'s picture is shown. The task automatically moves on after 1 second.  For this practice game, press SPACE BAR to continue.';
+      trial_counter = 0; // initialize trial counter to 0
+      if (practice) {
+        trial.stimulus = "<div style='font-size:60px;'>New Deck<br><br><img src='"+card+"'></img></div>"+guide(str)+game_number();
+        trial.trial_duration = null;
+        trial.choices = [32];
+      }
+      else {
+        trial.stimulus = "<div style='font-size:60px;'>New Deck<br><br><img src='"+card+"'></div>"+game_number();
+      }
+      trial.data.counter = counter;
+      trial.data.block = block;
+    }
+  }
+
+  // trial component 2: cards down
+  var trial_down = {
+
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    choices: [32], // 32 is space bar
+    data: {
+      reward: -100,
+      // mean: -1,
+      // sigma: -1,
+      side: -1, // 1 for left', 0 for right, -1 for center
+      type: 'forced_down',
+      card: ''
+    },
+    on_start: function(trial) {
+      var side = jsPsych.timelineVariable('side',  true);
+      var card = jsPsych.timelineVariable('card',  true);
+      var practice = jsPsych.timelineVariable('practice',  true);
+      var str = jsPsych.timelineVariable('str',  true);
+      if (practice) {
+        Y = empty()+card_down(card)+empty()+guide('Press SPACE BAR to draw one card from the deck ...');
+      }
+      else{
+        Y = empty()+card_down(card)+empty()+guide('Press SPACE BAR to draw one card.', 'white');
+      }
+      Y += game_number();
+
+      trial.stimulus    = Y;
+      trial.data.counter = counter;
+      trial.data.block = block;
+
+    }
+
+  }
+
+  // trial component 3: show outcome
+  var trial_outcome = {
+
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    choices: 32, //jsPsych.NO_KEYS,
+    trial_duration: 1000,
+    data: {
+      reward: -1,
+      // mean: -1,
+      // sigma: -1,
+      side: -1,
+      type: 'forced_outcome',
+      card: ''
+    },
+    on_start: function(trial) {
+      var outcome   = jsPsych.timelineVariable('outcome',  true);
+      var side = jsPsych.data.get().last(1).values()[0].side;
+      var practice = jsPsych.timelineVariable('practice',  true);
+      var card = jsPsych.timelineVariable('card',  true);
+      var str = 'This shows the outcome of the draw from the deck.  In the experiment this outcome disappears after 1 second. During these practice trials press SPACE BAR to move on.';
+
+      // var X = Math.round(randn_bm(m1, s1));
+      var X = outcome[trial_counter];
+      trial_counter++; // increment trial_counter ready for next trial
+      Y = empty()+face_card_up(X, card)+empty();
+      Y += game_number();
+
+      if (practice) {
+        trial.stimulus = Y+guide(str);
+        trial.trial_duration = null;
+        trial.choices = [32];
+      }
+      else {
+        trial.stimulus = Y;
+      }
+
+      trial.data.reward = X;
+      // trial.data.mean   = m1;
+      // trial.data.sigma  = s1;
+      trial.data.card   = jsPsych.timelineVariable('card', true);
+      trial.data.counter = counter;
+      trial.data.block = block;
+
+    }
+  }
+
+  var trial_choice_down = {
+
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    choices: ['f', 'j'],
+    data: {
+      reward: -1,
+      mean: -1,
+      sigma: -1,
+      side: -1,
+      type: 'choice_down',
+      choseDeck: -1,
+      offer: -1,
+      card: ''
+    },
+    on_start: function(trial) {
+      var side = jsPsych.timelineVariable('side',  true);
+      var r    = jsPsych.timelineVariable('offer', true);
+      var card = jsPsych.timelineVariable('card',  true);
+      var practice = jsPsych.timelineVariable('practice',  true);
+      var str = 'Now you have a choice.  Do you want to draw another card from the deck and get a random reward (which will be similar to the example draws you just made), or do you want a known reward for sure?  <br><br>Press f or j to choose left or right';
+      if (practice) {
+
+        if (side){
+          Y = card_down(card)+empty()+card_up_grey(r)+guide(str);
+        }
+        else {
+          Y = card_up_grey(r)+empty()+card_down(card)+guide(str);
+        }
+      }
+      else{
+
+        if (side){
+          Y = card_down(card)+empty()+card_up_grey(r);
+        }
+        else {
+          Y = card_up_grey(r)+empty()+card_down(card);
+        }
+        if (r==1){
+          Y += guide("Do you want another draw from the deck or "+r+" point for sure?<br><br>Press f to choose left, j to choose right", "white");
+        }
+        else{
+          Y += guide("Do you want another draw from the deck or "+r+" points for sure?<br><br>Press f to choose left, j to choose right", "white");
+        }
+      }
+      Y += game_number();
+
+      trial.stimulus    = Y;
+      trial.data.side   = side;
+      trial.data.card   = card;
+      trial.data.offer  = r;
+      // trial.data.mean = jsPsych.timelineVariable('mean', true);
+      // trial.data.sigma = jsPsych.timelineVariable('sigma', true);
+      trial.data.counter = counter;
+      trial.data.block = block;
+
+    },
+    on_finish: function(data){
+
+      var side = jsPsych.timelineVariable('side',  true);
+      if(data.key_press == 70){// 70 is the numeric code for f
+        if (side){
+          // chose left and deck was on left etc ...
+          data.choseDeck = true;
+        }
+        else {
+          data.choseDeck = false;
+        }
+      } else {
+        if (side){
+          data.choseDeck = false;
+        }
+        else {
+          data.choseDeck = true;
+        }
+      }
+
+    }
+
+  }
+
+  var trial_choice_outcome = {
+
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    choices: jsPsych.NO_KEYS,
+    trial_duration: 1000,
+    data: {
+      reward: -1,
+      // mean: -1,
+      // sigma: -1,
+      side: -1,
+      type: 'choice_outcome',
+      reward_on_choice: -1,
+      card: 'hi'
+    },
+    on_start: function(trial) {
+
+      var side  = jsPsych.timelineVariable('side',  true);
+      var offer = jsPsych.timelineVariable('offer', true);
+      var card  = jsPsych.timelineVariable('card',  true);
+      var practice = jsPsych.timelineVariable('practice',  true);
+
+      var choseDeck = jsPsych.data.get().last(1).values()[0].choseDeck;
+
+      var outcome   = jsPsych.timelineVariable('outcome',  true);
+      deck_reward = outcome[trial_counter]
+      //var deck_reward = Math.round(randn_bm(m1, s1));
+
+      if (choseDeck) {
+        // they chose the deck
+        if (side){
+          Y = face_card_up(deck_reward, card)+empty()+card_up_grey(offer);
+        }
+        else {
+          Y = card_up_grey(offer)+empty()+face_card_up(deck_reward, card);
+        }
+        trial.data.reward_on_choice = deck_reward;
+      } else {
+
+        if (side){
+          Y = card_down(card)+empty()+card_up(offer);
+        }
+        else {
+          Y = card_up(offer)+empty()+card_down(card);
+        }
+        //Y += guide(" ", "black");
+        trial.data.reward_on_choice = offer;
+      }
+
+      if (practice){
+        if (choseDeck){
+          Y = Y+guide('You chose another draw from the deck and earned '+deck_reward+' points. In the experiment this reward will show for 1 second.  In this practice game please press SPACE BAR to continue.');
+        }
+        else {
+          Y = Y+guide('You chose the known reward and earned '+offer+' points. In the experiment this reward will show for 1 second.  In this practice game please press SPACE BAR to continue.');
+        }
+        trial.trial_duration = null;
+        trial.choices =  [32];
+      }
+      Y += game_number();
+      trial.stimulus    = Y;
+      trial.data.side   = side; // 1 for left'
+      trial.data.card   = card;
+      trial.data.counter = counter;
+      trial.data.block = block;
+      //trial.data.mean   = m1;
+      //trial.data.sigma  = s1;
+    },
+    on_finish: function (){
+      counter = counter + 1;
+      // if ((counter % saveEveryNGames) == 0){
+      //   dataset = jsPsych.data.get();
+      //   dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID});
+      //   dataset = dataset.ignore('internal_node_id');
+      //   dataset = dataset.ignore('responses');
+      //   dataset = dataset.ignore('trial_type');
+      //   data = dataset.filterCustom(function(trial){
+      //     return trial.block === block;
+      //   })
+      //   write_data(data.csv());
+      //   block++;
+      // }
+
+    }
+
+  }
+
+  var game = { // could have a game10 and a game5 for long and short games
+    timeline: makeTrials(5) // can't seem to make n trials dynamic :-(
+  };
+
+  // MAIN STRCTURE OF EACH GAME
+  function makeTrials(n) {
+    var arr = [];
+    arr[0] = trial_new_game; // set trial_counter to 0 in here
+    for (i=0;i<n;i++){
+      arr[2*i+1] = trial_down;
+      arr[2*i+2] = trial_outcome; // increment trial_counter by one
+    };
+    arr[2*(n-1)+3] = trial_choice_down;
+    arr[2*(n-1)+4] = trial_choice_outcome;
+    return arr;
+  };
+
+
+  var example_game = {
+    timeline: [game],
+    timeline_variables: [
+      {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/004_o_m_h_a.png", practice: false},
+    ],
+  }
+  timeline.push(example_game);
+
+  var ready_to_start = {
+    type: 'html-keyboard-response',
+    stimulus: guide('Hopefully that all makes sense.  <br><br>You press SPACE BAR to draw from the deck 5 times and then f or j to make your choice.  Try to earn the most points you can!  <br><br>Press SPACE BAR to start the game.'),
+    choices: [32]
+  }
+  timeline.push(ready_to_start);
+
+  // REWARD STRUCTURE FOR EACH GAME
+  var test_procedure = {
+    timeline: [game],
+    repetitions: 1,
+    randomize_order: true,
+    timeline_variables: [
+      {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/004_o_m_h_a.png", practice: false},
+      {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/005_o_f_a_b.png", practice: false},
+    ]
+  }
+  timeline.push(test_procedure);
+
+  var end_screen = {
+    type: 'html-keyboard-response',
+    stimulus: 'This is the end of the experiment!  Thank you for taking part!',
+    choices: [32],
+    on_start: function(trial) {
+
+      dataset = jsPsych.data.get();
+      dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID});
+      dataset = dataset.ignore('internal_node_id');
+      dataset = dataset.ignore('responses');
+      dataset = dataset.ignore('trial_type');
+      data = dataset.filterCustom(function(trial){
+        return trial.block === block;
+      })
+      //write_data(data.csv());
+      data_out_to_server = data.csv();
+send_csv_file(data_out_to_server)
+
+    }
+  }
+  timeline.push(end_screen);
+
+
+  var i;
+  /* start the experiment */
+  jsPsych.init({
+    timeline: timeline,
+    preload_images: [
+      "../img/faces/004_o_m_h_a.png",
+      "../img/faces/005_o_f_a_b.png",
+    ],
+    on_finish: function() {
+      // save last block if not already saved
+      jsPsych.data.displayData();
+
+    }
+  });
+
+  
+
+  </script>
+
+</html>
