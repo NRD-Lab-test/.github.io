@@ -72,7 +72,7 @@
                     <label for="inputGroupSelect05">Experiment</label>
                     <select class="custom-select" id="Experiment_chosen">
                       <option selected>Choose...</option>
-                      <option value="SIMPLE_2">SIMPLE_2</option>                      <option value="FLAG_4">FLAG_4</option>
+                      <option value="FLAG_4">FLAG_4</option>                      <option value="SIMPLE_TEST">SIMPLE_TEST</option>
                     </select>
                   </div>
   
@@ -121,14 +121,14 @@
 
     document.cookie="register_loc=qe , exp="+exp+" , id="+responded.SID+" , email="+responded.email+"; path=/"
     //addition_of_experiments
-    //SIMPLE_2_start_redirect
-    if (exp=="SIMPLE_2")
-    {location.href = "../SIMPLE_2/consent/consent.html"};
-     //SIMPLE_2_end_redirect
     //FLAG_4_start_redirect
     if (exp=="FLAG_4")
     {location.href = "../FLAG_4/consent/consent.html"};
      //FLAG_4_end_redirect
+    //SIMPLE_TEST_start_redirect
+    if (exp=="SIMPLE_TEST")
+    {location.href = "../SIMPLE_TEST/consent/consent.html"};
+     //SIMPLE_TEST_end_redirect
 
 }
 
