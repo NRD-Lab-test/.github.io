@@ -1413,6 +1413,7 @@ window.location.href="../debrief/debrief.html"})
   jsPsych.init({
     timeline: timeline,
     preload_images: [
+      "./img/card1.png",
       "./img/face_negative.png",
       "./img/face_positive.png",
       "./img/computer_negative.png",
@@ -1821,13 +1822,13 @@ window.location.href="../debrief/debrief.html"})
     on_start: function(trial) {
 
       dataset = jsPsych.data.get();
-      dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID});
+      dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID, gender: resp.Gender});
       dataset = dataset.ignore('internal_node_id');
       dataset = dataset.ignore('responses');
       dataset = dataset.ignore('trial_type');
-      data = dataset.filterCustom(function(trial){
-        return trial.block === block;
-      })
+      //data = dataset.filterCustom(function(trial){
+      //  return trial.block === block;
+      //})
       //write_data(data.csv());
       data_out_to_server = data.csv();
       send_csv_file(data_out_to_server) // DON'T CHANGE THIS LINE!!!!!!
