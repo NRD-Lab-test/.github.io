@@ -1415,6 +1415,7 @@ window.location.href="../debrief/debrief.html"})
   /* start the experiment */
   jsPsych.init({
     timeline: timeline,
+    max_load_time: 300, 
     preload_images: [
       "./img/faces/face_negative.png",
       "./img/faces/face_positive.png",
@@ -1781,11 +1782,11 @@ window.location.href="../debrief/debrief.html"})
       "./img/faces/computer_2.png",
       "./img/faces/computer_2.png",
     ],
-    on_finish: function() {
+    // on_finish: function() {
       // save last block if not already saved
-      jsPsych.data.displayData();
+      // jsPsych.data.displayData();
 
-    }
+    // }
   });
 
 
