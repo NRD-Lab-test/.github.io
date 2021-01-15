@@ -635,7 +635,7 @@ window.location.href="../debrief/debrief.html"})
   var total_decks;// = 180;
   var resp;
   var sID;
-  var score = 1000
+  var score = 1000;
 
   function new_deck(str){
     return "<div style='position: fixed; font-size:100px; top: 80%; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; '>"+str+"</div>";
@@ -1408,6 +1408,29 @@ window.location.href="../debrief/debrief.html"})
 
   // total_decks = test_procedure.timeline_variables.length
 
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  var end_screen = {
+    type: 'html-keyboard-response',
+    stimulus: 'This is the end of the experiment!  Thank you for taking part!',
+    choices: [32],
+    on_start: function(trial) {
+
+      dataset = jsPsych.data.get();
+      dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID, gender: resp.Gender});
+      dataset = dataset.ignore('internal_node_id');
+      dataset = dataset.ignore('responses');
+      dataset = dataset.ignore('trial_type');
+      //data = dataset.filterCustom(function(trial){
+      //  return trial.block === block;
+      //})
+      //write_data(data.csv());
+      data_out_to_server = data.csv();
+      send_csv_file(data_out_to_server) // DON'T CHANGE THIS LINE!!!!!!
+
+    }
+  }
+  timeline.push(end_screen);
+
   var i;
   /* start the experiment */
   jsPsych.init({
@@ -1795,47 +1818,6 @@ window.location.href="../debrief/debrief.html"})
 
 
 
-
-
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
-  var end_screen = {
-    type: 'html-keyboard-response',
-    stimulus: 'This is the end of the experiment!  Thank you for taking part!',
-    choices: [32],
-    on_start: function(trial) {
-
-      dataset = jsPsych.data.get();
-      dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID, gender: resp.Gender});
-      dataset = dataset.ignore('internal_node_id');
-      dataset = dataset.ignore('responses');
-      dataset = dataset.ignore('trial_type');
-      //data = dataset.filterCustom(function(trial){
-      //  return trial.block === block;
-      //})
-      //write_data(data.csv());
-      data_out_to_server = data.csv();
-      send_csv_file(data_out_to_server) // DON'T CHANGE THIS LINE!!!!!!
-
-    }
-  }
-  timeline.push(end_screen);
   </script>
 
 </html>
