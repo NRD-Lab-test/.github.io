@@ -102,21 +102,552 @@ window.location.href="../debrief/debrief.html"})
   <script>
 
 
+  // // Setup some variables and helper functions
+  // var timeline = [];
+  // var counter = 0;
+  // var block = 1;
+  // var saveEveryNGames = 2;
+  // var total_decks = 171;
+  // var resp;
+  // var sID;
+  //
+  //
+  // function guide(str, color="red"){
+  //   return "<div style='position: fixed; top: 0; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; border-style: solid; border-color: "+color+"'>"+str+"</div>";
+  // }
+  // function game_number(){
+  //   return "<div style='position: fixed; bottom: 0; left: 0%; width:100%; '>Deck number: "+counter+" of "+total_decks +"</div>";
+  // }
+  //
+  // /*
+  // var inst = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = jsPsych.timelineVariable('str', true);
+  //   other = jsPsych.timelineVariable('other', true);
+  //     trial.stimulus = guide(str)+other;
+  //   }
+  // }
+  // */
+  // /*
+  // // Standard Normal variate using Box-Muller transform.
+  // function randn_bm(mu, sigma) {
+  //   var u = 0, v = 0;
+  //   while(u === 0) u = Math.random(); //Converting [0,1) to (0,1)
+  //   while(v === 0) v = Math.random();
+  //   var X = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v ) * sigma + mu
+  //   return X;
+  // };
+  // */
+  //
+  // function card_down(card){
+  //   return "<div style='float: left; border-style: solid; border-width: 2px; border-color: white; height: 250px; width: 200px;')><img src='"+card+"'></img></div>"
+  // }
+  // function empty(){
+  //   return "<div style='float: left; height: 250px; width: 200px;')></div>"
+  // }
+  // function card_up(r){
+  //   return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: black; font-size:60px;'')>"+r+"</div>"
+  // }
+  // function face_card_up(r, card){
+  //   return "<div style='float: left;z-index: 1; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: black; font-size:60px;'><div style='position: absolute; z-index: -1; background-image: url("+card+"); height: 250px; width: 200px; opacity: 0.4;'></div>"+r+"</div>";
+  // }
+  // function card_up_grey(r){
+  //   return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: white; font-size:60px; color:grey; background-color: lightgrey;'')>"+r+"</div>"
+  // }
+  //
+  // function left_down(){
+  //   return card_down()+empty()+empty();
+  // }
+  // function left_up(r){
+  //   return card_up(r)+empty()+empty();
+  // }
+  // function right_down(){
+  //   return empty()+empty()+card_down();
+  // }
+  // function right_up(r){
+  //   return empty()+empty()+card_up(r);
+  // }
+  //
+  //
+  // // SUBJECT DEMOGRAPHICS
+  // var survey_trial = {
+  //   type: 'survey-text',
+  //   questions: [
+  //     {prompt: "Please enter your initials", name: 'Initials'},
+  //     {prompt: "Please enter your age", name: 'Age'}
+  //   ],
+  //   on_finish: function (trial){
+  //     resp = JSON.parse(trial.responses);
+  //     sID = jsPsych.randomization.randomID(15);
+  //     console.log(sID);
+  //
+  //   }
+  // };
+  // timeline.push(survey_trial);
+  //
+  // // INSTRUCTIONS
+  // // easier to do instructions like this where we make each slide of instructions
+  // var inst1 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'Welcome to the experiment!<br><br>[press any key to continue].';
+  //     trial.stimulus = guide(str);
+  //   }
+  // }
+  // var inst2 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'NOTE: This is a pilot experiment for internal testing for the NRDlab and collaborators.';
+  //     trial.stimulus = guide(str);
+  //   }
+  // }
+  // var inst3 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'In this experiment you will be playing a card game in which you will make decisions about whether to draw a card to get a random reward or take a known reward for sure.';
+  //     trial.stimulus = guide(str);
+  //   }
+  // }
+  // var inst4 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'Here is what such a decision might look like - on the left is a deck of cards, on the right is a fixed offer of 10 points for sure.';
+  //     trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(10);
+  //   }
+  // }
+  // var inst5 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'You will press the f key to choose the option on the left (the deck in this case) and the j key to choose the option on the right (the fixed offer)';
+  //     trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(10);
+  //   }
+  // }
+  // var inst6 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'If you choose the deck you will get whatever the reward is on the card you draw. This reward could be negative or positive.  In this case it was 20 points, so you would earn more than taking the fixed offer in this case.';
+  //     trial.stimulus = guide(str)+card_up(20)+empty()+card_up_grey(10);
+  //   }
+  // }
+  // var inst7 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'In another case the reward might be -50 points, so in this case it would have been better to take the known offer.';
+  //     trial.stimulus = guide(str)+card_up(-50)+empty()+card_up_grey(10);
+  //   }
+  // }
+  // var inst8 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
+  //     trial.stimulus = guide(str);
+  //   }
+  // }
+  // var inst9 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'To give you information about each deck before you make a choice, we will present you with 5 examples from each deck before you make a choice.  To see these examples you will press the SPACE BAR key.';
+  //     trial.stimulus = guide(str);
+  //   }
+  // }
+  // var inst10 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'Finally, to give you an extra hint about the deck, instead of showing you the back of a playing card, we will show you a picture of the person who made each deck.  Each person was a participant, a member of the public, that came into our lab. This may give you a clue as to whether this person is trustworthy or not.';
+  //     trial.stimulus = guide(str)+card_down("../img/faces/007_m_m_d_b.png" );
+  //   }
+  // }
+  // var inst11 = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   on_start: function(trial) {
+  //     str = 'The experiment should take about 30 minutes to complete.  When you are ready to begin we will try an example game to make sure everything makes sense.';
+  //     trial.stimulus = guide(str);
+  //   }
+  // }
+  //
+  // var instructions = {
+  //   timeline: [inst1, inst2, inst3, inst4, inst5, inst6, inst7, inst8, inst9, inst10, inst11],
+  // }
+  // timeline.push(instructions);
+  //
+  //
+  // // TRIALS
+  // // trial component 1: new game
+  // var trial_new_game = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: "hi",
+  //   trial_duration: 1000,
+  //   data: {
+  //     block: null,
+  //     type: 'NewDeck',
+  //   },
+  //   choices: jsPsych.NO_KEYS,
+  //   on_start: function(trial){
+  //     var practice = jsPsych.timelineVariable('practice',  true);
+  //     var card = jsPsych.timelineVariable('card',  true);
+  //     var str = 'This text appears each time there is a new deck made by the person who\'s picture is shown. The task automatically moves on after 1 second.  For this practice game, press SPACE BAR to continue.';
+  //     trial_counter = 0; // initialize trial counter to 0
+  //     if (practice) {
+  //       trial.stimulus = "<div style='font-size:60px;'>New Deck<br><br><img src='"+card+"'></img></div>"+guide(str)+game_number();
+  //       trial.trial_duration = null;
+  //       trial.choices = [32];
+  //     }
+  //     else {
+  //       trial.stimulus = "<div style='font-size:60px;'>New Deck<br><br><img src='"+card+"'></div>"+game_number();
+  //     }
+  //     trial.data.counter = counter;
+  //     trial.data.block = block;
+  //   }
+  // }
+  //
+  // // trial component 2: cards down
+  // var trial_down = {
+  //
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   choices: [32], // 32 is space bar
+  //   data: {
+  //     reward: -100,
+  //     // mean: -1,
+  //     // sigma: -1,
+  //     side: -1, // 1 for left', 0 for right, -1 for center
+  //     type: 'forced_down',
+  //     card: ''
+  //   },
+  //   on_start: function(trial) {
+  //     var side = jsPsych.timelineVariable('side',  true);
+  //     var card = jsPsych.timelineVariable('card',  true);
+  //     var practice = jsPsych.timelineVariable('practice',  true);
+  //     var str = jsPsych.timelineVariable('str',  true);
+  //     if (practice) {
+  //       Y = empty()+card_down(card)+empty()+guide('Press SPACE BAR to draw one card from the deck ...');
+  //     }
+  //     else{
+  //       Y = empty()+card_down(card)+empty()+guide('Press SPACE BAR to draw one card.', 'white');
+  //     }
+  //     Y += game_number();
+  //
+  //     trial.stimulus    = Y;
+  //     trial.data.counter = counter;
+  //     trial.data.block = block;
+  //
+  //   }
+  //
+  // }
+  //
+  // // trial component 3: show outcome
+  // var trial_outcome = {
+  //
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   choices: 32, //jsPsych.NO_KEYS,
+  //   trial_duration: 1000,
+  //   data: {
+  //     reward: -1,
+  //     // mean: -1,
+  //     // sigma: -1,
+  //     side: -1,
+  //     type: 'forced_outcome',
+  //     card: ''
+  //   },
+  //   on_start: function(trial) {
+  //     var outcome   = jsPsych.timelineVariable('outcome',  true);
+  //     var side = jsPsych.data.get().last(1).values()[0].side;
+  //     var practice = jsPsych.timelineVariable('practice',  true);
+  //     var card = jsPsych.timelineVariable('card',  true);
+  //     var str = 'This shows the outcome of the draw from the deck.  In the experiment this outcome disappears after 1 second. During these practice trials press SPACE BAR to move on.';
+  //
+  //     // var X = Math.round(randn_bm(m1, s1));
+  //     var X = outcome[trial_counter];
+  //     trial_counter++; // increment trial_counter ready for next trial
+  //     Y = empty()+face_card_up(X, card)+empty();
+  //     Y += game_number();
+  //
+  //     if (practice) {
+  //       trial.stimulus = Y+guide(str);
+  //       trial.trial_duration = null;
+  //       trial.choices = [32];
+  //     }
+  //     else {
+  //       trial.stimulus = Y;
+  //     }
+  //
+  //     trial.data.reward = X;
+  //     // trial.data.mean   = m1;
+  //     // trial.data.sigma  = s1;
+  //     trial.data.card   = jsPsych.timelineVariable('card', true);
+  //     trial.data.counter = counter;
+  //     trial.data.block = block;
+  //
+  //   }
+  // }
+  //
+  // var trial_choice_down = {
+  //
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   choices: ['f', 'j'],
+  //   data: {
+  //     reward: -1,
+  //     mean: -1,
+  //     sigma: -1,
+  //     side: -1,
+  //     type: 'choice_down',
+  //     choseDeck: -1,
+  //     offer: -1,
+  //     card: ''
+  //   },
+  //   on_start: function(trial) {
+  //     var side = jsPsych.timelineVariable('side',  true);
+  //     var r    = jsPsych.timelineVariable('offer', true);
+  //     var card = jsPsych.timelineVariable('card',  true);
+  //     var practice = jsPsych.timelineVariable('practice',  true);
+  //     var str = 'Now you have a choice.  Do you want to draw another card from the deck and get a random reward (which will be similar to the example draws you just made), or do you want a known reward for sure?  <br><br>Press f or j to choose left or right';
+  //     if (practice) {
+  //
+  //       if (side){
+  //         Y = card_down(card)+empty()+card_up_grey(r)+guide(str);
+  //       }
+  //       else {
+  //         Y = card_up_grey(r)+empty()+card_down(card)+guide(str);
+  //       }
+  //     }
+  //     else{
+  //
+  //       if (side){
+  //         Y = card_down(card)+empty()+card_up_grey(r);
+  //       }
+  //       else {
+  //         Y = card_up_grey(r)+empty()+card_down(card);
+  //       }
+  //       if (r==1){
+  //         Y += guide("Do you want another draw from the deck or "+r+" point for sure?<br><br>Press f to choose left, j to choose right", "white");
+  //       }
+  //       else{
+  //         Y += guide("Do you want another draw from the deck or "+r+" points for sure?<br><br>Press f to choose left, j to choose right", "white");
+  //       }
+  //     }
+  //     Y += game_number();
+  //
+  //     trial.stimulus    = Y;
+  //     trial.data.side   = side;
+  //     trial.data.card   = card;
+  //     trial.data.offer  = r;
+  //     // trial.data.mean = jsPsych.timelineVariable('mean', true);
+  //     // trial.data.sigma = jsPsych.timelineVariable('sigma', true);
+  //     trial.data.counter = counter;
+  //     trial.data.block = block;
+  //
+  //   },
+  //   on_finish: function(data){
+  //
+  //     var side = jsPsych.timelineVariable('side',  true);
+  //     if(data.key_press == 70){// 70 is the numeric code for f
+  //       if (side){
+  //         // chose left and deck was on left etc ...
+  //         data.choseDeck = true;
+  //       }
+  //       else {
+  //         data.choseDeck = false;
+  //       }
+  //     } else {
+  //       if (side){
+  //         data.choseDeck = false;
+  //       }
+  //       else {
+  //         data.choseDeck = true;
+  //       }
+  //     }
+  //
+  //   }
+  //
+  // }
+  //
+  // var trial_choice_outcome = {
+  //
+  //   type: 'html-keyboard-response',
+  //   stimulus: 'hi',
+  //   choices: jsPsych.NO_KEYS,
+  //   trial_duration: 1000,
+  //   data: {
+  //     reward: -1,
+  //     // mean: -1,
+  //     // sigma: -1,
+  //     side: -1,
+  //     type: 'choice_outcome',
+  //     reward_on_choice: -1,
+  //     card: 'hi'
+  //   },
+  //   on_start: function(trial) {
+  //
+  //     var side  = jsPsych.timelineVariable('side',  true);
+  //     var offer = jsPsych.timelineVariable('offer', true);
+  //     var card  = jsPsych.timelineVariable('card',  true);
+  //     var practice = jsPsych.timelineVariable('practice',  true);
+  //
+  //     var choseDeck = jsPsych.data.get().last(1).values()[0].choseDeck;
+  //
+  //     var outcome   = jsPsych.timelineVariable('outcome',  true);
+  //     deck_reward = outcome[trial_counter]
+  //     //var deck_reward = Math.round(randn_bm(m1, s1));
+  //
+  //     if (choseDeck) {
+  //       // they chose the deck
+  //       if (side){
+  //         Y = face_card_up(deck_reward, card)+empty()+card_up_grey(offer);
+  //       }
+  //       else {
+  //         Y = card_up_grey(offer)+empty()+face_card_up(deck_reward, card);
+  //       }
+  //       trial.data.reward_on_choice = deck_reward;
+  //     } else {
+  //
+  //       if (side){
+  //         Y = card_down(card)+empty()+card_up(offer);
+  //       }
+  //       else {
+  //         Y = card_up(offer)+empty()+card_down(card);
+  //       }
+  //       //Y += guide(" ", "black");
+  //       trial.data.reward_on_choice = offer;
+  //     }
+  //
+  //     if (practice){
+  //       if (choseDeck){
+  //         Y = Y+guide('You chose another draw from the deck and earned '+deck_reward+' points. In the experiment this reward will show for 1 second.  In this practice game please press SPACE BAR to continue.');
+  //       }
+  //       else {
+  //         Y = Y+guide('You chose the known reward and earned '+offer+' points. In the experiment this reward will show for 1 second.  In this practice game please press SPACE BAR to continue.');
+  //       }
+  //       trial.trial_duration = null;
+  //       trial.choices =  [32];
+  //     }
+  //     Y += game_number();
+  //     trial.stimulus    = Y;
+  //     trial.data.side   = side; // 1 for left'
+  //     trial.data.card   = card;
+  //     trial.data.counter = counter;
+  //     trial.data.block = block;
+  //     //trial.data.mean   = m1;
+  //     //trial.data.sigma  = s1;
+  //   },
+  //   on_finish: function (){
+  //     counter = counter + 1;
+  //     // if ((counter % saveEveryNGames) == 0){
+  //     //   dataset = jsPsych.data.get();
+  //     //   dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID});
+  //     //   dataset = dataset.ignore('internal_node_id');
+  //     //   dataset = dataset.ignore('responses');
+  //     //   dataset = dataset.ignore('trial_type');
+  //     //   data = dataset.filterCustom(function(trial){
+  //     //     return trial.block === block;
+  //     //   })
+  //     //   write_data(data.csv());
+  //     //   block++;
+  //     // }
+  //
+  //   }
+  //
+  // }
+  //
+  // var game = { // could have a game10 and a game5 for long and short games
+  //   timeline: makeTrials(5) // can't seem to make n trials dynamic :-(
+  // };
+  //
+  // // MAIN STRCTURE OF EACH GAME
+  // function makeTrials(n) {
+  //   var arr = [];
+  //   arr[0] = trial_new_game; // set trial_counter to 0 in here
+  //   for (i=0;i<n;i++){
+  //     arr[2*i+1] = trial_down;
+  //     arr[2*i+2] = trial_outcome; // increment trial_counter by one
+  //   };
+  //   arr[2*(n-1)+3] = trial_choice_down;
+  //   arr[2*(n-1)+4] = trial_choice_outcome;
+  //   return arr;
+  // };
+  //
+  //
+  // var example_game = {
+  //   timeline: [game],
+  //   timeline_variables: [
+  //     {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/004_o_m_h_a.png", practice: false},
+  //   ],
+  // }
+  // timeline.push(example_game);
+  //
+  // var ready_to_start = {
+  //   type: 'html-keyboard-response',
+  //   stimulus: guide('Hopefully that all makes sense.  <br><br>You press SPACE BAR to draw from the deck 5 times and then f or j to make your choice.  Try to earn the most points you can!  <br><br>Press SPACE BAR to start the game.'),
+  //   choices: [32]
+  // }
+  // timeline.push(ready_to_start);
+  //
+  // // REWARD STRUCTURE FOR EACH GAME
+  // var test_procedure = {
+  //   timeline: [game],
+  //   repetitions: 1,
+  //   randomize_order: true,
+  //   timeline_variables: [
+  //     {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/004_o_m_h_a.png", practice: false},
+  //     {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/005_o_f_a_b.png", practice: false},
+  //   ]
+  // }
+  // timeline.push(test_procedure);
+  //
+  //
+  //
+  //
+  // var i;
+  // /* start the experiment */
+  // jsPsych.init({
+  //   timeline: timeline,
+  //   preload_images: [
+  //     "../img/faces/004_o_m_h_a.png",
+  //     "../img/faces/005_o_f_a_b.png",
+  //   ],
+  //   on_finish: function() {
+  //     // save last block if not already saved
+  //     jsPsych.data.displayData();
+  //
+  //   }
+  // });
+
+
   // Setup some variables and helper functions
   var timeline = [];
-  var counter = 0;
+  var counter = 1;
   var block = 1;
   var saveEveryNGames = 2;
-  var total_decks = 171;
+  var total_decks;// = 180;
   var resp;
   var sID;
+  var score = 1000
 
-
+  function new_deck(str){
+    return "<div style='position: fixed; font-size:100px; top: 80%; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; '>"+str+"</div>";
+  }
   function guide(str, color="red"){
-    return "<div style='position: fixed; top: 0; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; border-style: solid; border-color: "+color+"'>"+str+"</div>";
+    return "<div style='position: fixed; font-size: 24pt; padding: 10px; background-color: white; line-height: 1.5; top: 0; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 1250px; border-style: solid; border-color: "+color+"'>"+str+"</div>";
   }
   function game_number(){
-    return "<div style='position: fixed; bottom: 0; left: 0%; width:100%; '>Deck number: "+counter+" of "+total_decks +"</div>";
+    return "<div style='position: fixed; bottom: 0;  left: 0%; width:100%; text-align: right'>Deck number: "+counter+" of "+total_decks +"&nbsp</div>";
+  }
+  function current_score(){
+    return "<div style='position: fixed; bottom: 50px; left: 0%; width:100%; font-size: 36pt'>Score: "+score+"</div>";
   }
 
   /*
@@ -142,19 +673,33 @@ window.location.href="../debrief/debrief.html"})
   */
 
   function card_down(card){
-    return "<div style='float: left; border-style: solid; border-width: 2px; border-color: white; height: 250px; width: 200px;')><img src='"+card+"'></img></div>"
+    return "<div style='float: left; border-style: solid; border-width: 2px; border-color: white; height: 500px; width: 400px;')><img src='"+card+"'></img></div>"
   }
   function empty(){
-    return "<div style='float: left; height: 250px; width: 200px;')></div>"
+    return "<div style='float: left; height: 500px; width: 200px;')></div>"
   }
   function card_up(r){
-    return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: black; font-size:60px;'')>"+r+"</div>"
+    if (r > 0){
+      return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 500px; width: 400px; border-style: solid; border-width: 2px; border-color: black; font-size:120px;'')>+" + r + "</div>"
+    } else {
+      return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 500px; width: 400px; border-style: solid; border-width: 2px; border-color: black; font-size:120px;'')>" + r + "</div>"
+    }
+
   }
   function face_card_up(r, card){
-    return "<div style='float: left;z-index: 1; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: black; font-size:60px;'><div style='position: absolute; z-index: -1; background-image: url("+card+"); height: 250px; width: 200px; opacity: 0.4;'></div>"+r+"</div>";
+    if (r > 0){
+      return "<div style='float: left;z-index: 1; display: flex; justify-content: center; align-items: center; height: 500px; width: 400px; border-style: solid; border-width: 2px; border-color: black; font-size:120px;'><div style='position: absolute; z-index: -1; background-image: url("+card+"); height: 500px; width: 400px; opacity: 0.1;'></div>+"+r+"</div>";
+    } else {
+      return "<div style='float: left;z-index: 1; display: flex; justify-content: center; align-items: center; height: 500px; width: 400px; border-style: solid; border-width: 2px; border-color: black; font-size:120px;'><div style='position: absolute; z-index: -1; background-image: url("+card+"); height: 500px; width: 400px; opacity: 0.1;'></div>"+r+"</div>";
+    }
+
   }
   function card_up_grey(r){
-    return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 250px; width: 200px; border-style: solid; border-width: 2px; border-color: white; font-size:60px; color:grey; background-color: lightgrey;'')>"+r+"</div>"
+    if (r > 0){
+      return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 500px; width: 400px; border-style: solid; border-width: 2px; border-color: white; font-size:120px; color:grey; background-color: lightgrey;'')>+" + r + "</div>"
+    } else {
+      return "<div style='float: left; display: flex; justify-content: center; align-items: center; height: 500px; width: 400px; border-style: solid; border-width: 2px; border-color: white; font-size:120px; color:grey; background-color: lightgrey;'')>" + r + "</div>"
+    }
   }
 
   function left_down(){
@@ -176,6 +721,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'survey-text',
     questions: [
       {prompt: "Please enter your initials", name: 'Initials'},
+      {prompt: "Please enter your gender", name: 'Gender'},
       {prompt: "Please enter your age", name: 'Age'}
     ],
     on_finish: function (trial){
@@ -197,14 +743,14 @@ window.location.href="../debrief/debrief.html"})
       trial.stimulus = guide(str);
     }
   }
-  var inst2 = {
+  /*var inst2 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
       str = 'NOTE: This is a pilot experiment for internal testing for the NRDlab and collaborators.';
       trial.stimulus = guide(str);
     }
-  }
+  }*/
   var inst3 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
@@ -217,43 +763,79 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'Here is what such a decision might look like - on the left is a deck of cards, on the right is a fixed offer of 10 points for sure.';
-      trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(10);
+      str = 'Here is what such a decision might look like - on the left is a deck of cards, on the right is a fixed offer of 100 points for sure.';
+      trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(100);
     }
   }
   var inst5 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'You will press the f key to choose the option on the left (the deck in this case) and the j key to choose the option on the right (the fixed offer)';
-      trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(10);
+      str = 'You will press the f key to choose the option on the left (the deck in this case) and the j key to choose the option on the right (the fixed offer).  Note that on most keyboards, the f and j keys have a small notch on them making them easy to find.';
+      trial.stimulus = guide(str)+card_down('../img/card1.png')+empty()+card_up_grey(100);
     }
   }
   var inst6 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'If you choose the deck you will get whatever the reward is on the card you draw. This reward could be negative or positive.  In this case it was 20 points, so you would earn more than taking the fixed offer in this case.';
-      trial.stimulus = guide(str)+card_up(20)+empty()+card_up_grey(10);
+      str = 'If you choose to draw a card from the deck you will get whatever the reward is on the card you draw. This reward could be negative or positive.  In this case it was 200 points, so you would earn more than taking the fixed offer in this case.';
+      trial.stimulus = guide(str)+card_up(200)+empty()+card_up_grey(100);
     }
   }
   var inst7 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'In another case the reward might be -50 points, so in this case it would have been better to take the known offer.';
-      trial.stimulus = guide(str)+card_up(-50)+empty()+card_up_grey(10);
+      str = 'In another case the reward might be -150 points, so in this case it would have been better to take the known offer.';
+      trial.stimulus = guide(str)+card_up(-150)+empty()+card_up_grey(10);
     }
   }
   var inst8 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
+      str = 'Every decision involves a different deck of cards.  Some of these decks were created by different computer algorithms.  Some of these decks were created by different people who were participants in our lab (before the coronavirus pandemic).'
+      // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
       trial.stimulus = guide(str);
     }
   }
+  var inst8a = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'Some computer algorithms and some people created decks that are “good” on average, in that they tend to pay out positive values causing you to gain points, and some decks are “bad” on average, in that they tend to pay out negative values causing you to lose points.'
+      // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst8b = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'Crucially, while good decks are usually good on average, they can occasionally give negative outcomes.  Conversely, while bad decks are usually bad on average, they can occasionally give positive outcomes.'
+      // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst8c = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'When a deck was created by a computer, we will illustrate this by changing the back of the card to be an image of a computer along with some text to indicate whether this algorithm usually creates negative decks or positive decks.  For example, here is a case where the algorithm usually creates negative decks.'
+      // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
+      trial.stimulus = guide(str)+card_down("./img/computer_negative.png");
+    }
+  }
   var inst9 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'When a deck was created by a person, we will illustrate this by changing the back of the card to be an image of the person who created the deck.  Each person was a participant, a member of the public, who came into our lab. This may give you a clue as to whether this person was trustworthy or not.';
+      trial.stimulus = guide(str)+card_down("./img/faces/038_m_m_a_b.png" );
+    }
+  }
+  var inst10 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
@@ -261,25 +843,25 @@ window.location.href="../debrief/debrief.html"})
       trial.stimulus = guide(str);
     }
   }
-  var inst10 = {
-    type: 'html-keyboard-response',
-    stimulus: 'hi',
-    on_start: function(trial) {
-      str = 'Finally, to give you an extra hint about the deck, instead of showing you the back of a playing card, we will show you a picture of the person who made each deck.  Each person was a participant, a member of the public, that came into our lab. This may give you a clue as to whether this person is trustworthy or not.';
-      trial.stimulus = guide(str)+card_down("../img/faces/007_m_m_d_b.png" );
-    }
-  }
   var inst11 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'The experiment should take about 30 minutes to complete.  When you are ready to begin we will try an example game to make sure everything makes sense.';
+      str = 'Finally, to help you keep track of how well you are doing, your score will be shown at the bottom of the screen.  You will start from 1000 points and can both gain and lose points. Note that you will only gain or lose points when you choose between the two options.';
+      trial.stimulus = guide(str);
+    }
+  }
+  var inst12 = {
+    type: 'html-keyboard-response',
+    stimulus: 'hi',
+    on_start: function(trial) {
+      str = 'In the experiment you will make decisions about 180 different decks. This should take about 30-40 minutes to complete. When you are ready to begin we will try a few example games to make sure that everything makes sense.';
       trial.stimulus = guide(str);
     }
   }
 
   var instructions = {
-    timeline: [inst1, inst2, inst3, inst4, inst5, inst6, inst7, inst8, inst9, inst10, inst11],
+    timeline: [inst1, inst3, inst4, inst5, inst6, inst7, inst8, inst8a, inst8b, inst8c, inst9, inst10, inst11, inst12],
   }
   timeline.push(instructions);
 
@@ -301,12 +883,14 @@ window.location.href="../debrief/debrief.html"})
       var str = 'This text appears each time there is a new deck made by the person who\'s picture is shown. The task automatically moves on after 1 second.  For this practice game, press SPACE BAR to continue.';
       trial_counter = 0; // initialize trial counter to 0
       if (practice) {
-        trial.stimulus = "<div style='font-size:60px;'>New Deck<br><br><img src='"+card+"'></img></div>"+guide(str)+game_number();
+        //trial.stimulus = "<div style='font-size:120px;'>New Deck<br><br><img src='"+card+"'></img></div>"+guide(str)+game_number();
+        trial.stimulus = new_deck("New Deck")+"<div style='font-size:120px;'><img src='"+card+"'></img></div>"+guide(str)+game_number()+current_score();
         trial.trial_duration = null;
         trial.choices = [32];
       }
       else {
-        trial.stimulus = "<div style='font-size:60px;'>New Deck<br><br><img src='"+card+"'></div>"+game_number();
+        // trial.stimulus = "<div style='font-size:120px;'>New Deck<br><br><img src='"+card+"'></div>"+game_number();
+        trial.stimulus = new_deck("New Deck")+"<div style='font-size:120px;'><img src='"+card+"'></img></div>"+guide(str)+game_number()+current_score();
       }
       trial.data.counter = counter;
       trial.data.block = block;
@@ -339,7 +923,7 @@ window.location.href="../debrief/debrief.html"})
         Y = empty()+card_down(card)+empty()+guide('Press SPACE BAR to draw one card.', 'white');
       }
       Y += game_number();
-
+      Y += current_score();
       trial.stimulus    = Y;
       trial.data.counter = counter;
       trial.data.block = block;
@@ -350,7 +934,7 @@ window.location.href="../debrief/debrief.html"})
 
   // trial component 3: show outcome
   var trial_outcome = {
-
+    //
     type: 'html-keyboard-response',
     stimulus: 'hi',
     choices: 32, //jsPsych.NO_KEYS,
@@ -371,10 +955,13 @@ window.location.href="../debrief/debrief.html"})
       var str = 'This shows the outcome of the draw from the deck.  In the experiment this outcome disappears after 1 second. During these practice trials press SPACE BAR to move on.';
 
       // var X = Math.round(randn_bm(m1, s1));
+      //var X = outcome[trial_counter];
       var X = outcome[trial_counter];
       trial_counter++; // increment trial_counter ready for next trial
       Y = empty()+face_card_up(X, card)+empty();
       Y += game_number();
+      Y += current_score();
+
 
       if (practice) {
         trial.stimulus = Y+guide(str);
@@ -441,6 +1028,7 @@ window.location.href="../debrief/debrief.html"})
         }
       }
       Y += game_number();
+      Y += current_score();
 
       trial.stimulus    = Y;
       trial.data.side   = side;
@@ -504,6 +1092,7 @@ window.location.href="../debrief/debrief.html"})
       deck_reward = outcome[trial_counter]
       //var deck_reward = Math.round(randn_bm(m1, s1));
 
+
       if (choseDeck) {
         // they chose the deck
         if (side){
@@ -513,16 +1102,23 @@ window.location.href="../debrief/debrief.html"})
           Y = card_up_grey(offer)+empty()+face_card_up(deck_reward, card);
         }
         trial.data.reward_on_choice = deck_reward;
+        // update score
+        score += deck_reward
+
       } else {
 
         if (side){
           Y = card_down(card)+empty()+card_up(offer);
+          // Y = face_card_up(deck_reward, card)+empty()+card_up(offer);
         }
         else {
           Y = card_up(offer)+empty()+card_down(card);
+          // Y = card_up(offer)+empty()+face_card_up(deck_reward, card);
         }
         //Y += guide(" ", "black");
         trial.data.reward_on_choice = offer;
+        // update score
+        score += offer
       }
 
       if (practice){
@@ -536,6 +1132,7 @@ window.location.href="../debrief/debrief.html"})
         trial.choices =  [32];
       }
       Y += game_number();
+      Y += current_score();
       trial.stimulus    = Y;
       trial.data.side   = side; // 1 for left'
       trial.data.card   = card;
@@ -546,6 +1143,7 @@ window.location.href="../debrief/debrief.html"})
     },
     on_finish: function (){
       counter = counter + 1;
+      example_game_counter += 1;
       // if ((counter % saveEveryNGames) == 0){
       //   dataset = jsPsych.data.get();
       //   dataset.addToAll({age: resp.Age, initials: resp.Initials, sID: sID});
@@ -581,33 +1179,641 @@ window.location.href="../debrief/debrief.html"})
   };
 
 
+  var example_game_counter = 1; // this is a HACK
+  total_decks = 4;//test_procedure.timeline_variables.length;
   var example_game = {
     timeline: [game],
     timeline_variables: [
-      {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/004_o_m_h_a.png", practice: false},
+      {outcome: [+100, +70, +700, +110, +90, +80], side: 0, offer: +100,  card: "./img/face_positive.png", practice: true},
+      {outcome: [+60, +80, +60, +70, +60, +40], side: 1, offer: +60,  card: "./img/computer_positive.png", practice: true},
+      {outcome: [-50, -70, -10, -60, -530, -60], side: 1, offer: -90,  card: "./img/computer_negative.png", practice: true},
+      {outcome: [-40, -50, -50, -60, -70, -50], side: 0, offer: -40,  card: "./img/face_negative.png", practice: true},
     ],
+    on_finish: function() {
+      //example_game_counter += 1;
+      console.log(example_game_counter);
+
+
+    }
   }
   timeline.push(example_game);
 
   var ready_to_start = {
     type: 'html-keyboard-response',
     stimulus: guide('Hopefully that all makes sense.  <br><br>You press SPACE BAR to draw from the deck 5 times and then f or j to make your choice.  Try to earn the most points you can!  <br><br>Press SPACE BAR to start the game.'),
-    choices: [32]
+    choices: [32],
+    on_start: function(){
+      console.log("does this run?");
+      console.log(example_game_counter);
+      score = 1000;
+      counter = 1;
+      total_decks = test_procedure.timeline_variables.length;
+
+
+    }
   }
   timeline.push(ready_to_start);
 
   // REWARD STRUCTURE FOR EACH GAME
+
   var test_procedure = {
     timeline: [game],
     repetitions: 1,
     randomize_order: true,
     timeline_variables: [
-      {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/004_o_m_h_a.png", practice: false},
-      {outcome: [1, 2, 3, 4, 5, 6], offer: -41,  card: "../img/faces/005_o_f_a_b.png", practice: false},
+      {outcome: [-100, -100, -120, -110, -90, -80], side: 1, offer: -100,  card: "./img/faces/004_o_m_h_a.png", practice: false},
+      {outcome: [-60, -880, -60, -70, -60, -40], side: 1, offer: -140,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+50, +70, -10, +60, +530, +60], side: 1, offer: +50,  card: "./img/faces/005_o_f_a_b.png", practice: false},
+      // {outcome: [-40, -50, -50, -60, -70, -50], side: 0, offer: -40,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-100, -970, -100, -70, -90, -110], side: 0, offer: -190,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+140, +150, +130, +120, +130, +130], side: 1, offer: +120,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+70, +80, +40, +750, +30, +60], side: 0, offer: +110,  card: "./img/faces/006_m_f_h_b.png", practice: false},
+      // {outcome: [-80, -60, -70, -70, -1000, -1360], side: 1, offer: -170,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+70, +100, +80, +100, +110, +100], side: 0, offer: +80,  card: "./img/faces/008_y_m_h_a.png", practice: false},
+      // {outcome: [+180, +170, +180, +180, +160, +130], side: 0, offer: +160,  card: "./img/faces/011_m_f_h_b.png", practice: false},
+      // {outcome: [+160, +160, +160, +210, +830, +150], side: 1, offer: +260,  card: "./img/faces/013_y_m_h_b.png", practice: false},
+      // {outcome: [+40, +30, +30, +0, +60, +80], side: 0, offer: +10,  card: "./img/faces/015_o_m_h_a.png", practice: false},
+      // {outcome: [-40, +10, +980, +10, +20, -10], side: 1, offer: +30,  card: "./img/faces/007_m_m_d_b.png", practice: false},
+      // {outcome: [-1230, +210, +110, +180, +160, +180], side: 1, offer: -20,  card: "./img/faces/010_y_f_a_b.png", practice: false},
+      // {outcome: [+270, +270, +250, +260, +280, +260], side: 0, offer: +280,  card: "./img/faces/018_o_m_h_b.png", practice: false},
+      // {outcome: [+990, +150, +110, +160, +180, +1010], side: 0, offer: +260,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-50, -60, -1170, -60, -40, -50], side: 1, offer: -170,  card: "./img/faces/012_o_f_a_b.png", practice: false},
+      // {outcome: [-900, -150, -170, -160, -170, -160], side: 1, offer: -250,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-120, -150, -140, +1160, -130, -140], side: 1, offer: -50,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-150, -110, -150, -160, -120, -140], side: 0, offer: -150,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-100, -100, -150, -80, -120, -70], side: 0, offer: -120,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-170, +1060, -150, -180, -120, -130], side: 0, offer: -40,  card: "./img/faces/014_m_m_d_b.png", practice: false},
+      // {outcome: [-90, -90, -120, -40, -1180, -1240], side: 0, offer: -200,  card: "./img/faces/020_y_f_h_b.png", practice: false},
+      // {outcome: [+120, +150, +120, +130, +120, +110], side: 1, offer: +130,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+70, +50, +70, +90, +70, +90], side: 0, offer: +80,  card: "./img/faces/022_y_f_h_b.png", practice: false},
+      // {outcome: [-80, -100, -60, -90, +1140, -100], side: 1, offer: -10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+960, -150, -130, -120, -190, -160], side: 1, offer: -60,  card: "./img/faces/016_y_m_a_b.png", practice: false},
+      // {outcome: [-150, -150, -170, -180, -170, -170], side: 1, offer: -150,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+140, -690, +170, +170, +170, +140], side: 0, offer: -20,  card: "./img/faces/019_m_f_d_b.png", practice: false},
+      // {outcome: [+80, -930, +90, +100, +90, -1110], side: 0, offer: -20,  card: "./img/faces/025_y_m_h_b.png", practice: false},
+      // {outcome: [-140, -110, -100, -100, +1240, -80], side: 0, offer: -10,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+160, +130, +160, +150, +190, +170], side: 1, offer: +160,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-10, -50, -80, -1010, -70, -70], side: 0, offer: -160,  card: "./img/faces/021_o_f_d_a.png", practice: false},
+      // {outcome: [+150, +160, +120, -1180, +110, -1110], side: 1, offer: +10,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-20, +970, +20, +10, +10, +20], side: 1, offer: +60,  card: "./img/faces/027_o_m_h_b.png", practice: false},
+      // {outcome: [-70, -70, +1150, -70, -70, -50], side: 1, offer: +0,  card: "./img/faces/029_m_f_h_b.png", practice: false},
+      // {outcome: [+110, +100, +140, +60, +100, +80], side: 1, offer: +100,  card: "./img/faces/024_o_f_d_b.png", practice: false},
+      // {outcome: [-100, -100, +640, -80, -110, -100], side: 1, offer: -30,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-110, -120, -100, -100, -110, -100], side: 0, offer: -110,  card: "./img/faces/031_y_m_h_b.png", practice: false},
+      // {outcome: [-130, -110, -140, -110, +1020, +920], side: 1, offer: -50,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-140, -100, -80, -110, -90, -120], side: 1, offer: -90,  card: "./img/faces/026_m_m_a_b.png", practice: false},
+      // {outcome: [+20, +40, +10, +850, +10, +30], side: 0, offer: +90,  card: "./img/faces/028_y_f_a_b.png", practice: false},
+      // {outcome: [-50, -30, -40, -40, -1200, -90], side: 0, offer: -130,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+160, +170, +150, -1050, +140, +160], side: 1, offer: +0,  card: "./img/faces/033_o_m_h_a.png", practice: false},
+      // {outcome: [+10, +50, +70, -1150, +50, +30], side: 1, offer: -30,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-110, -140, -120, -130, -120, -130], side: 1, offer: -120,  card: "./img/faces/030_o_f_d_b.png", practice: false},
+      // {outcome: [+150, +140, +160, +160, +160, +120], side: 1, offer: +140,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-60, -10, +920, -30, -20, +870], side: 1, offer: +0,  card: "./img/faces/035_m_f_h_b.png", practice: false},
+      // {outcome: [-80, -40, -700, -40, -50, -70], side: 0, offer: -120,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+160, +1120, +120, +130, +130, +120], side: 0, offer: +240,  card: "./img/faces/032_m_m_d_b.png", practice: false},
+      // {outcome: [-80, -80, -120, -100, -110, -40], side: 1, offer: -110,  card: "./img/faces/034_y_f_d_a.png", practice: false},
+      // {outcome: [-130, -110, -140, -160, -1320, -1230], side: 1, offer: -260,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+910, -150, -130, -110, -160, -130], side: 1, offer: -60,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-130, -90, -110, -130, -100, -80], side: 1, offer: -130,  card: "./img/faces/037_y_m_h_b.png", practice: false},
+      // {outcome: [+170, +170, +180, +180, +150, +170], side: 0, offer: +150,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-20, -60, +850, -50, +0, -40], side: 0, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-110, -1180, -90, -90, -110, -140], side: 0, offer: -220,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-1250, -40, -70, -50, -60, -1130], side: 1, offer: -150,  card: "./img/faces/036_o_f_d_b.png", practice: false},
+      // {outcome: [-680, -110, -120, -70, -130, -450], side: 1, offer: -200,  card: "./img/faces/039_o_m_h_a.png", practice: false},
+      // {outcome: [-90, -100, +760, -100, -120, -110], side: 0, offer: -30,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-150, -80, -110, -110, -110, -130], side: 1, offer: -110,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+90, +100, +100, +100, +100, +100], side: 0, offer: +100,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-180, -180, -160, -170, -130, -140], side: 1, offer: -160,  card: "./img/faces/041_y_m_h_b.png", practice: false},
+      // {outcome: [+50, +90, -710, +110, +100, +80], side: 1, offer: +0,  card: "./img/faces/038_m_m_a_b.png", practice: false},
+      // {outcome: [+50, +40, +90, +90, -910, +100], side: 1, offer: -10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+110, +130, +130, +110, -880, +130], side: 0, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+690, -210, -170, -180, -200, -180], side: 1, offer: -60,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+220, +180, -850, +170, +160, +220], side: 1, offer: +0,  card: "./img/faces/043_m_f_h_b.png", practice: false},
+      // {outcome: [+80, +90, +60, +110, +100, +150], side: 0, offer: +100,  card: "./img/faces/040_y_f_d_b.png", practice: false},
+      // {outcome: [-70, -1000, -60, -70, -70, -100], side: 1, offer: -150,  card: "./img/faces/042_o_m_d_b.png", practice: false},
+      // {outcome: [+180, +150, +180, +910, +130, +150], side: 0, offer: +280,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+60, +80, +60, +50, +770, +40], side: 0, offer: +130,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+240, -840, +260, +230, +230, -980], side: 1, offer: -10,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+170, +150, +170, +170, +150, +210], side: 1, offer: +150,  card: "./img/faces/044_o_f_a_a.png", practice: false},
+      // {outcome: [-120, -1290, -100, -100, -120, -1270], side: 1, offer: -240,  card: "./img/faces/045_m_m_h_b.png", practice: false},
+      // {outcome: [+140, +70, +140, +120, +1010, +1190], side: 0, offer: +240,  card: "./img/faces/047_o_f_h_b.png", practice: false},
+      // {outcome: [+130, +150, +140, +160, +130, +150], side: 1, offer: +160,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-80, -70, -50, -80, -90, -70], side: 1, offer: -60,  card: "./img/faces/049_y_m_h_b.png", practice: false},
+      // {outcome: [-80, -100, -80, -90, -100, -70], side: 0, offer: -70,  card: "./img/faces/051_m_m_h_b.png", practice: false},
+      // {outcome: [+120, +120, +150, +150, +90, +90], side: 0, offer: +120,  card: "./img/faces/053_o_m_h_a.png", practice: false},
+      // {outcome: [-160, -120, -160, -130, -120, -120], side: 1, offer: -140,  card: "./img/faces/046_o_m_d_b.png", practice: false},
+      // {outcome: [+960, -100, -100, -110, -120, -100], side: 0, offer: -30,  card: "./img/faces/055_o_f_h_a.png", practice: false},
+      // {outcome: [+190, +160, +190, +180, +120, +200], side: 0, offer: +170,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-10, +1140, -20, -60, -40, -20], side: 0, offer: +10,  card: "./img/faces/048_y_f_a_b.png", practice: false},
+      // {outcome: [+210, +210, +120, +140, +150, +150], side: 1, offer: +160,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+150, +140, +140, +140, +170, +130], side: 0, offer: +160,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+30, +0, +40, +10, +0, +50], side: 0, offer: -10,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-1200, -100, -110, -90, -110, -80], side: 1, offer: -230,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+60, +320, +60, +80, +100, +110], side: 1, offer: +90,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-250, -270, -790, -250, -230, -230], side: 0, offer: -320,  card: "./img/faces/057_y_m_h_a.png", practice: false},
+      // {outcome: [-50, +1170, -50, -30, -60, -70], side: 1, offer: +10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+30, -10, +30, +30, +30, +20], side: 1, offer: +10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-140, -140, -120, -170, -910, -110], side: 0, offer: -230,  card: "./img/faces/059_o_m_h_b.png", practice: false},
+      // {outcome: [-960, +170, +190, +200, +230, +180], side: 1, offer: +0,  card: "./img/faces/061_m_f_h_b.png", practice: false},
+      // {outcome: [+10, -10, +0, +20, -470, +10], side: 0, offer: -30,  card: "./img/faces/063_y_f_h_b.png", practice: false},
+      // {outcome: [-880, +120, +120, +120, +150, +100], side: 0, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+140, +140, +160, -1360, +150, +160], side: 1, offer: -20,  card: "./img/faces/065_o_m_h_a.png", practice: false},
+      // {outcome: [-190, -170, -200, -190, -1220, -1180], side: 0, offer: -340,  card: "./img/faces/050_m_f_a_b.png", practice: false},
+      // {outcome: [-120, -110, -130, -80, -80, -90], side: 0, offer: -100,  card: "./img/faces/052_m_f_d_b.png", practice: false},
+      // {outcome: [+30, +80, +70, +600, +80, +50], side: 0, offer: +110,  card: "./img/faces/054_y_f_a_b.png", practice: false},
+      // {outcome: [+110, +100, +640, +130, +120, +100], side: 1, offer: +170,  card: "./img/faces/067_o_f_h_b.png", practice: false},
+      // {outcome: [+0, +0, +40, -10, +40, -20], side: 1, offer: -10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-70, -130, -140, -100, -90, -100], side: 1, offer: -120,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+150, +160, -1200, +170, +160, +150], side: 0, offer: +10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-170, +1000, -120, -150, -130, +760], side: 0, offer: -40,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+130, +120, +130, +80, +90, +110], side: 0, offer: +120,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-20, -50, -870, -10, +20, -20], side: 0, offer: -90,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-60, -50, -750, -90, -40, -930], side: 1, offer: -150,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+1150, +140, +100, +140, +70, +120], side: 0, offer: +220,  card: "./img/faces/069_y_f_h_b.png", practice: false},
+      // {outcome: [-760, +50, +70, +70, +90, +110], side: 1, offer: +10,  card: "./img/faces/071_y_f_h_b.png", practice: false},
+      // {outcome: [+120, +160, +110, +1080, +120, +120], side: 0, offer: +240,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+40, +50, +30, +60, +30, +30], side: 0, offer: +30,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-730, +0, +10, -20, +0, -20], side: 0, offer: -20,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-30, -30, +640, -70, -90, -80], side: 1, offer: -30,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+100, +100, +80, +60, +870, +50], side: 1, offer: +190,  card: "./img/faces/056_m_m_a_b.png", practice: false},
+      // {outcome: [-170, -160, -160, -190, -160, -170], side: 1, offer: -150,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-40, -50, -60, -900, -60, +10], side: 1, offer: -120,  card: "./img/faces/058_m_m_f_a.png", practice: false},
+      // {outcome: [+100, +150, +90, +1490, +130, +160], side: 1, offer: +280,  card: "./img/faces/060_o_f_d_a.png", practice: false},
+      // {outcome: [-60, -30, -90, -1490, -60, -90], side: 1, offer: -180,  card: "./img/faces/073_m_f_h_b.png", practice: false},
+      // {outcome: [-30, +900, -100, -30, -50, -60], side: 0, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+190, +210, +160, +140, +180, +200], side: 0, offer: +180,  card: "./img/faces/062_y_m_a_b.png", practice: false},
+      // {outcome: [+100, +120, +80, -710, +70, +60], side: 1, offer: +0,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-180, +1100, -190, -220, -150, -170], side: 0, offer: -60,  card: "./img/faces/075_o_f_h_b.png", practice: false},
+      // {outcome: [-60, -40, -70, -1160, -80, -1090], side: 1, offer: -170,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+70, +100, +90, +80, +70, +60], side: 1, offer: +100,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-120, -100, -130, -90, -110, -130], side: 0, offer: -110,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-50, -830, -80, -70, -60, -60], side: 1, offer: -150,  card: "./img/faces/064_m_f_d_b.png", practice: false},
+      // {outcome: [-90, -90, -60, -90, -70, -90], side: 0, offer: -60,  card: "./img/faces/077_m_m_h_b.png", practice: false},
+      // {outcome: [+120, -1210, +120, +110, +140, +100], side: 0, offer: +10,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+70, +100, +100, +80, +770, +90], side: 1, offer: +170,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-100, -130, -100, +1070, -160, +970], side: 1, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-90, -110, +910, -100, -140, +910], side: 1, offer: -40,  card: "./img/faces/066_y_m_a_b.png", practice: false},
+      // {outcome: [-20, -30, -20, -20, -10, -30], side: 1, offer: -20,  card: "./img/faces/080_m_f_h_b.png", practice: false},
+      // {outcome: [-80, -100, -80, -60, -100, -60], side: 0, offer: -70,  card: "./img/faces/068_m_m_d_a.png", practice: false},
+      // {outcome: [+90, +120, +70, +100, -910, +80], side: 1, offer: -20,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+1090, -110, -110, -80, -100, -110], side: 0, offer: -40,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-120, -90, -90, -70, -140, -70], side: 1, offer: -120,  card: "./img/faces/070_m_m_d_b.png", practice: false},
+      // {outcome: [+120, +1320, +150, +90, +140, +1120], side: 0, offer: +260,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-1130, +70, +70, +20, +30, +30], side: 0, offer: -20,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+100, +80, +80, +70, +60, +120], side: 1, offer: +90,  card: "./img/faces/072_y_m_a_b.png", practice: false},
+      // {outcome: [+70, +80, -700, +80, +140, +70], side: 0, offer: +10,  card: "./img/faces/074_o_m_a_b.png", practice: false},
+      // {outcome: [-70, +740, -100, -110, -100, -130], side: 0, offer: -10,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+890, -150, -140, -120, -130, -160], side: 1, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [-130, -90, -100, +990, -120, -100], side: 1, offer: -30,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+30, +40, +30, +30, +1010, +40], side: 0, offer: +100,  card: "./img/faces/082_m_m_h_b.png", practice: false},
+      // {outcome: [-110, -110, -130, -100, -1490, -1270], side: 0, offer: -260,  card: "./img/faces/076_o_m_d_b.png", practice: false},
+      // {outcome: [-110, -100, -60, -70, -100, -30], side: 0, offer: -100,  card: "./img/faces/079_o_f_d_b.png", practice: false},
+      // {outcome: [+200, +220, +190, +1010, +180, +210], side: 0, offer: +320,  card: "./img/faces/084_m_f_h_a.png", practice: false},
+      // {outcome: [+160, +150, +180, +1130, +190, +170], side: 0, offer: +280,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+60, +100, -700, +60, +50, +50], side: 1, offer: +0,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+50, +60, -290, +90, +50, +100], side: 1, offer: -20,  card: "./img/faces/086_o_f_h_b.png", practice: false},
+      // {outcome: [-880, -250, -270, -280, -260, -240], side: 0, offer: -370,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [-100, -110, -120, -90, -110, -80], side: 1, offer: -120,  card: "./img/faces/088_o_f_h_a.png", practice: false},
+      // {outcome: [+110, +120, +110, +140, +160, +140], side: 0, offer: +110,  card: "./img/faces/081_y_m_d_b.png", practice: false},
+      // {outcome: [-850, +10, +40, +60, +30, -740], side: 1, offer: -10,  card: "./img/faces/083_o_m_f_b.png", practice: false},
+      // {outcome: [+130, +110, +180, +660, +160, +160], side: 0, offer: +220,  card: "./img/faces/090_y_f_h_b.png", practice: false},
+      // {outcome: [-120, -90, -110, -100, +910, -100], side: 1, offer: -30,  card: "./img/faces/085_y_f_a_a.png", practice: false},
+      // {outcome: [+60, +90, +70, +130, -980, +80], side: 0, offer: +10,  card: "./img/faces/087_m_m_a_b.png", practice: false},
+      // {outcome: [+80, +80, +1260, +110, +80, +100], side: 1, offer: +230,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+1370, +170, +190, +210, +170, +170], side: 0, offer: +330,  card: "./img/faces/089_y_m_a_b.png", practice: false},
+      // {outcome: [+920, -150, -110, -150, -140, -160], side: 0, offer: -30,  card: "./img/faces/091_o_m_d_b.png", practice: false},
+      // {outcome: [+100, +120, +140, -1030, +130, +140], side: 0, offer: +10,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+1290, -110, -120, -110, -110, -100], side: 1, offer: -10,  card: "./img/faces/092_m_m_h_a.png", practice: false},
+      // {outcome: [-150, -130, -140, -140, +1000, -140], side: 1, offer: -20,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+70, +120, +140, +90, +100, +130], side: 0, offer: +100,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+20, +40, +670, +10, +30, +10], side: 1, offer: +100,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+90, +100, +80, +110, +110, +100], side: 0, offer: +110,  card: "./img/faces/093_m_f_a_b.png", practice: false},
+      // {outcome: [-250, -230, -240, -250, -250, -250], side: 0, offer: -230,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+20, +40, -960, +40, +30, +40], side: 1, offer: +0,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+160, -800, +100, +110, +130, +110], side: 0, offer: +10,  card: "./img/faces/094_m_m_h_a.png", practice: false},
+      // {outcome: [+130, +140, +130, +130, +130, +110], side: 0, offer: +150,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+170, +150, +130, +160, +150, +190], side: 0, offer: +150,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+110, +100, +960, +120, +120, +120], side: 0, offer: +230,  card: "./img/faces/096_o_f_d_b.png", practice: false},
+      // {outcome: [-110, -80, -80, -60, -70, -60], side: 0, offer: -90,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+60, +60, +40, -890, +40, +80], side: 0, offer: -10,  card: "./img/faces/098_y_f_a_b.png", practice: false},
+      // {outcome: [+170, +900, +140, +160, +170, +900], side: 0, offer: +240,  card: "./img/faces/097_m_f_h_a.png", practice: false},
+      // {outcome: [-140, -1190, -130, -150, -130, -120], side: 0, offer: -280,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+150, +160, +120, -1110, +160, +140], side: 1, offer: -20,  card: "./img/faces/computer_2.png", practice: false},
+      // {outcome: [+1220, -10, -20, +0, -40, -10], side: 0, offer: +0,  card: "./img/faces/computer_1.png", practice: false},
+      // {outcome: [+100, +140, +120, +100, +110, +120], side: 1, offer: +130,  card: "./img/faces/computer_2.png", practice: false},
     ]
+
   }
   timeline.push(test_procedure);
 
+  // total_decks = test_procedure.timeline_variables.length
+
+
+
+
+  var i;
+  /* start the experiment */
+  jsPsych.init({
+    timeline: timeline,
+    preload_images: [
+      "./img/faces/004_o_m_h_a.png",
+      "./img/faces/006_m_f_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/008_y_m_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/005_o_f_a_b.png",
+      "./img/faces/007_m_m_d_b.png",
+      "./img/faces/011_m_f_h_b.png",
+      "./img/faces/010_y_f_a_b.png",
+      "./img/faces/013_y_m_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/015_o_m_h_a.png",
+      "./img/faces/018_o_m_h_b.png",
+      "./img/faces/020_y_f_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/022_y_f_h_b.png",
+      "./img/faces/025_y_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/012_o_f_a_b.png",
+      "./img/faces/027_o_m_h_b.png",
+      "./img/faces/029_m_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/014_m_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/016_y_m_a_b.png",
+      "./img/faces/019_m_f_d_b.png",
+      "./img/faces/021_o_f_d_a.png",
+      "./img/faces/024_o_f_d_b.png",
+      "./img/faces/031_y_m_h_b.png",
+      "./img/faces/033_o_m_h_a.png",
+      "./img/faces/026_m_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/028_y_f_a_b.png",
+      "./img/faces/035_m_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/037_y_m_h_b.png",
+      "./img/faces/039_o_m_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/030_o_f_d_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/041_y_m_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/043_m_f_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/032_m_m_d_b.png",
+      "./img/faces/045_m_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/034_y_f_d_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/047_o_f_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/036_o_f_d_b.png",
+      "./img/faces/049_y_m_h_b.png",
+      "./img/faces/051_m_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/038_m_m_a_b.png",
+      "./img/faces/053_o_m_h_a.png",
+      "./img/faces/040_y_f_d_b.png",
+      "./img/faces/042_o_m_d_b.png",
+      "./img/faces/055_o_f_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/044_o_f_a_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/057_y_m_h_a.png",
+      "./img/faces/059_o_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/046_o_m_d_b.png",
+      "./img/faces/061_m_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/048_y_f_a_b.png",
+      "./img/faces/050_m_f_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/052_m_f_d_b.png",
+      "./img/faces/054_y_f_a_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/056_m_m_a_b.png",
+      "./img/faces/063_y_f_h_b.png",
+      "./img/faces/058_m_m_f_a.png",
+      "./img/faces/065_o_m_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/060_o_f_d_a.png",
+      "./img/faces/062_y_m_a_b.png",
+      "./img/faces/067_o_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/069_y_f_h_b.png",
+      "./img/faces/071_y_f_h_b.png",
+      "./img/faces/064_m_f_d_b.png",
+      "./img/faces/066_y_m_a_b.png",
+      "./img/faces/068_m_m_d_a.png",
+      "./img/faces/073_m_f_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/070_m_m_d_b.png",
+      "./img/faces/072_y_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/075_o_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/074_o_m_a_b.png",
+      "./img/faces/077_m_m_h_b.png",
+      "./img/faces/076_o_m_d_b.png",
+      "./img/faces/079_o_f_d_b.png",
+      "./img/faces/080_m_f_h_b.png",
+      "./img/faces/082_m_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/084_m_f_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/081_y_m_d_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/086_o_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/088_o_f_h_a.png",
+      "./img/faces/090_y_f_h_b.png",
+      "./img/faces/092_m_m_h_a.png",
+      "./img/faces/094_m_m_h_a.png",
+      "./img/faces/083_o_m_f_b.png",
+      "./img/faces/085_y_f_a_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/087_m_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/089_y_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/097_m_f_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/091_o_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/093_m_f_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/096_o_f_d_b.png",
+      "./img/faces/098_y_f_a_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/100_o_f_d_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/102_o_m_a_b.png",
+      "./img/faces/104_m_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/099_y_m_h_b.png",
+      "./img/faces/101_y_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/106_y_f_d_b.png",
+      "./img/faces/103_m_f_h_b.png",
+      "./img/faces/105_y_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/107_o_m_h_b.png",
+      "./img/faces/109_y_m_h_b.png",
+      "./img/faces/111_m_f_h_b.png",
+      "./img/faces/108_m_m_d_b.png",
+      "./img/faces/110_o_f_d_b.png",
+      "./img/faces/112_o_f_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/114_y_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/116_m_m_a_b.png",
+      "./img/faces/113_m_f_h_a.png",
+      "./img/faces/115_y_f_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/118_o_m_a_b.png",
+      "./img/faces/120_o_f_d_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/117_m_f_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/119_y_m_h_b.png",
+      "./img/faces/122_m_f_a_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/121_o_m_h_b.png",
+      "./img/faces/124_o_f_d_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/123_y_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/126_m_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/128_m_f_a_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/125_y_f_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/131_o_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/133_o_f_a_b.png",
+      "./img/faces/127_y_m_h_b.png",
+      "./img/faces/130_o_f_h_b.png",
+      "./img/faces/135_y_m_a_b.png",
+      "./img/faces/137_o_m_d_b.png",
+      "./img/faces/132_y_f_h_b.png",
+      "./img/faces/134_y_f_h_b.png",
+      "./img/faces/139_m_f_a_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/141_o_m_d_b.png",
+      "./img/faces/136_m_m_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/138_m_f_h_b.png",
+      "./img/faces/143_o_f_d_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/140_y_f_h_b.png",
+      "./img/faces/142_m_m_h_a.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/146_o_m_a_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/148_o_f_d_b.png",
+      "./img/faces/150_y_f_d_b.png",
+      "./img/faces/144_y_m_h_b.png",
+      "./img/faces/152_y_f_a_b.png",
+      "./img/faces/147_y_m_h_b.png",
+      "./img/faces/154_o_f_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/149_m_m_h_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/156_m_f_a_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/151_o_m_h_b.png",
+      "./img/faces/158_o_f_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/160_y_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/153_y_m_h_a.png",
+      "./img/faces/155_m_m_h_a.png",
+      "./img/faces/162_y_f_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/157_m_f_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/159_m_m_h_a.png",
+      "./img/faces/164_o_f_d_b.png",
+      "./img/faces/166_o_m_f_b.png",
+      "./img/faces/161_o_m_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/168_m_f_f_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/170_y_m_a_b.png",
+      "./img/faces/163_y_f_h_b.png",
+      "./img/faces/165_m_m_h_a.png",
+      "./img/faces/167_y_m_h_b.png",
+      "./img/faces/169_m_m_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/171_y_f_h_b.png",
+      "./img/faces/173_y_f_h_a.png",
+      "./img/faces/175_y_m_h_a.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/172_o_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/177_y_f_h_b.png",
+      "./img/faces/179_m_m_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/174_o_f_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/176_o_m_d_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/182_y_f_h_b.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/178_m_m_a_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_1.png",
+      "./img/faces/180_m_f_a_b.png",
+      "./img/faces/004_o_m_h_a.png",
+      "./img/faces/006_m_f_h_b.png",
+      "./img/faces/005_o_f_a_b.png",
+      "./img/faces/008_y_m_h_a.png",
+      "./img/faces/007_m_m_d_b.png",
+      "./img/faces/011_m_f_h_b.png",
+      "./img/faces/010_y_f_a_b.png",
+      "./img/faces/012_o_f_a_b.png",
+      "./img/faces/014_m_m_d_b.png",
+      "./img/faces/computer_2.png",
+      "./img/faces/computer_2.png",
+
+    ],
+    on_finish: function() {
+      // save last block if not already saved
+      jsPsych.data.displayData();
+
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
+  // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
   var end_screen = {
     type: 'html-keyboard-response',
     stimulus: 'This is the end of the experiment!  Thank you for taking part!',
@@ -624,30 +1830,11 @@ window.location.href="../debrief/debrief.html"})
       })
       //write_data(data.csv());
       data_out_to_server = data.csv();
-send_csv_file(data_out_to_server)
+      send_csv_file(data_out_to_server) // DON'T CHANGE THIS LINE!!!!!!
 
     }
   }
   timeline.push(end_screen);
-
-
-  var i;
-  /* start the experiment */
-  jsPsych.init({
-    timeline: timeline,
-    preload_images: [
-      "../img/faces/004_o_m_h_a.png",
-      "../img/faces/005_o_f_a_b.png",
-    ],
-    on_finish: function() {
-      // save last block if not already saved
-      jsPsych.data.displayData();
-
-    }
-  });
-
-  
-
   </script>
 
 </html>
