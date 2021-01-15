@@ -24,21 +24,10 @@
     counter={count:0}
     send_csv('https://boxreroute.nrdlab.org/box',csv_n,csv_file,SID,exp_name);};
 
-  // BEGIN BOB EDIT
   function csv_name(exp_name,SID){
-    //return String(exp_name)+"-"+String(SID)+".csv"
-    return String(exp_name)+"-"+String(SID)+"-"+String(makeid(10))+".csv";
+    return String(exp_name)+"-"+String(SID)+".csv"
+    // return String(exp_name)+"-"+String(SID)+".csv";
   };
-  function makeid(length) {
-   var result           = '';
-   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-   var charactersLength = characters.length;
-   for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-   }
-   return result;
-  }
-  // END BOB EDIT
   function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
