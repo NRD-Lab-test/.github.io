@@ -25,7 +25,7 @@
 </style>
   <body>
       <script>
-var actions.checked_box=true
+var   var actions={checked_box:true}
           function redirect(){
               if (actions.checked_box){
                   console.log("success")
@@ -37,7 +37,7 @@ var actions.checked_box=true
                   }
                   else{
                     location.href = "../../global_html/back_to_experiment.html"
-                  }}              }
+                  }}  }            
               function getCookie(cname) {
                 var name = cname + "=";
                 var decodedCookie = decodeURIComponent(document.cookie);
@@ -51,7 +51,7 @@ var actions.checked_box=true
                     return c.substring(name.length, c.length);
                   }
                 }
-                return "";
+                return "";}
                 redirect()
 }
             
