@@ -26,22 +26,13 @@
   <body>
       <script>
           var actions={checked_box:true}
-          function verify_checked(){
-              if (actions.checked_box){
-                actions.checked_box=false;
-              }
-              else {
-                actions.checked_box=true;
-              };
-              console.log(actions.checked_box)
-          }
           function redirect(){
               if (actions.checked_box){
                   console.log("success")
                 //addition_of_experiments
                 location.href = "../experiment/index_lane.html"
               }
-            verify_checked()
+            redirect()
             }      </script>
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
