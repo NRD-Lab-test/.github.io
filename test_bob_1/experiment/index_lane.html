@@ -103,7 +103,7 @@ window.location.href="../debrief/debrief.html"})
   <script>
 
 
-
+  // on first page say that we need the information again
 
 
   // Setup some variables and helper functions
@@ -309,7 +309,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'When a deck was created by a computer program, you will see a unique image of a computer with a colored background and a label to indicate whether the computer program usually makes good or bad decks. <br><br>[press any key to continue]'
+      str = 'When a deck is created by a computer, you will see a unique image of a computer with a colored background and label. Each computer was rated by previous participants in our lab. The color and label with the image give you a clue as to whether this computer was perceived as positive or negative. <br><br>[press any key to continue]'
       // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
       trial.stimulus = guide(str)//+card_down("./img/computer_negative.png");
     }
@@ -327,7 +327,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'When a deck was created by a person, the card deck will show an image of the person who created it. <br><br>Each person was a participant, a member of the public, who came into our lab. This may give you a clue as to whether this person was trustworthy or not.<br><br>[press any key to continue]';
+      str = 'When a deck was created by a person, the card deck will show an image of the person who created it. <br><br>Each person was a participant, a member of the public, who came into our lab. This may give you a clue as to whether this person was trustworthy or untrustworthy.<br><br>[press any key to continue]';
       trial.stimulus = guide(str)+card_down("./img/faces/038_m_m_a_b.png" );
     }
   }
