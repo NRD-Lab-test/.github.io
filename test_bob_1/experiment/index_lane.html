@@ -210,7 +210,7 @@ window.location.href="../debrief/debrief.html"})
 
     }
   };
-  timeline.push(survey_trial);
+  // timeline.push(survey_trial);
 
   // INSTRUCTIONS
   // easier to do instructions like this where we make each slide of instructions
@@ -218,7 +218,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'Welcome to the experiment!<br><br>[press any key to continue]';
+      str = 'Welcome to the experiment!  Before we begin describing the experiment we need to ask you to re-enter some demographic information.  <br><br>[press any key to continue]';
       trial.stimulus = guide(str);
     }
   }
@@ -282,7 +282,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'Every decision involves a different deck of cards with variable payouts. <br> Some of these decks were created by different computer programs and some were created by different participants from a previous study in our lab.<br><br>[press any key to continue]'
+      str = 'Every decision involves a different deck of cards with variable payouts. <br> Some of these decks were created by different computer programs and some were created by different participants from a study in our lab.<br><br>[press any key to continue]'
       // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
       trial.stimulus = guide(str);
     }
@@ -309,7 +309,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'When a deck is created by a computer, you will see a unique image of a computer with a colored background and label. Each computer was rated by previous participants in our lab. The color and label with the image give you a clue as to whether this computer was perceived as positive or negative. <br><br>[press any key to continue]'
+      str = 'For decks created by a computer, you will see a unique image of a computer with a colored background and label. Each computer was rated by previous participants in our lab. The color and label with the image give you a clue as to whether this computer was perceived as positive or negative. <br><br>[press any key to continue]'
       // str = 'Every decision involves a different deck of cards that was created by participants in our lab. Some people designed decks that were good on average (although even these decks can have negative outcomes), some people designed decks that were bad on average (although these can have some positive outcomes too).';
       trial.stimulus = guide(str)//+card_down("./img/computer_negative.png");
     }
@@ -327,7 +327,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'When a deck was created by a person, the card deck will show an image of the person who created it. <br><br>Each person was a participant, a member of the public, who came into our lab. This may give you a clue as to whether this person was trustworthy or untrustworthy.<br><br>[press any key to continue]';
+      str = 'For decks created by a person, the card deck will show an image of the person who created it. <br><br>Each person was a participant who came into our lab. This may give you a clue as to whether this person was trustworthy or untrustworthy.<br><br>[press any key to continue]';
       trial.stimulus = guide(str)+card_down("./img/faces/038_m_m_a_b.png" );
     }
   }
@@ -344,20 +344,21 @@ window.location.href="../debrief/debrief.html"})
     stimulus: 'hi',
     on_start: function(trial) {
       str = 'To help you keep track of how well you are doing, your score will be shown at the bottom of the screen.  <br><br>You will start from 1000 points and can both gain and lose points. <br><br>Note that you will only gain or lose points when you choose between the two options.<br><br>[press any key to continue]';
-      trial.stimulus = guide(str);
+      trial.stimulus = guide(str)+current_score();
     }
   }
   var inst12 = {
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'In the experiment you will make decisions about 180 different decks. This should take about 30-40 minutes to complete. <br><br>When you are ready to begin we will try a few example games to make sure that everything makes sense.<br><br>[press any key to continue]';
+      str = 'In the experiment you will make decisions about 180 different decks. This should take about 30-40 minutes to complete. Please try to respond as quickly as possible. <br><br>When you are ready to begin we will try a few example games to make sure that everything makes sense.<br><br>[press any key to continue]';
       trial.stimulus = guide(str);
     }
   }
 
+
   var instructions = {
-    timeline: [inst1, inst3, inst4, inst5, inst6, inst6a, inst7, inst8, inst8a, inst8c, inst8d, inst9, inst10, inst11, inst12],
+    timeline: [inst1, survey_trial, inst3, inst4, inst5, inst6, inst6a, inst7, inst8, inst8a, inst8c, inst8d, inst9, inst10, inst11, inst12],
   }
   timeline.push(instructions);
 
@@ -619,10 +620,10 @@ window.location.href="../debrief/debrief.html"})
 
       if (practice){
         if (choseDeck){
-          Y = Y+guide('You chose another draw from the deck and earned '+deck_reward+' points. In the experiment this outcome will show for 1 second.  In this practice game please press SPACE BAR to continue.');
+          Y = Y+guide('You chose another draw from the deck and earned '+deck_reward+' points. These points have been added to your score.<br><br>In the experiment this outcome will show for 1 second.  In this practice game please press SPACE BAR to continue.');
         }
         else {
-          Y = Y+guide('You chose the known outcome and earned '+offer+' points. In the experiment this outcome will show for 1 second.  In this practice game please press SPACE BAR to continue.');
+          Y = Y+guide('You chose the known outcome and earned '+offer+' points. These points have been added to your score.<br><br>In the experiment this outcome will show for 1 second.  In this practice game please press SPACE BAR to continue.');
         }
         trial.trial_duration = null;
         trial.choices =  [32];
@@ -694,9 +695,11 @@ window.location.href="../debrief/debrief.html"})
   }
   timeline.push(example_game);
 
+
+
   var ready_to_start = {
     type: 'html-keyboard-response',
-    stimulus: guide('Hopefully that all makes sense.  <br><br>You press SPACE BAR to draw from the deck 5 times and then F or J to make your choice.  Try to earn the most points you can!  <br><br>Press SPACE BAR to start the game.'),
+    stimulus: guide('Hopefully that all makes sense.  <br><br>You press SPACE BAR to draw from the deck 5 times and then F or J to make your choice. Please try to make your choice as quickly and accurately as possible to earn the most points you can!  <br><br>Press SPACE BAR to start the game.'),
     choices: [32],
     on_start: function(){
       console.log("does this run?");
