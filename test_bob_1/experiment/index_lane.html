@@ -126,7 +126,7 @@ window.location.href="../debrief/debrief.html"})
     return "<div style='position: fixed; bottom: 0;  left: 0%; width:100%; text-align: right'>Deck number: "+counter+" of "+total_decks +"&nbsp</div>";
   }
   function current_score(){
-    return "<div style='position: fixed; bottom: 50px; left: 0%; width:100%; font-size: 36pt'>Score: "+score+"</div>";
+    return "" //"<div style='position: fixed; bottom: 50px; left: 0%; width:100%; font-size: 36pt'>Score: "+score+"</div>";
   }
 
   /*
@@ -343,7 +343,8 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'To help you keep track of how well you are doing, your score will be shown at the bottom of the screen.  <br><br>You will start from 1000 points and can both gain and lose points. <br><br>Note that you will only gain or lose points when you choose between the two options.<br><br>[press any key to continue]';
+      // str = 'To help you keep track of how well you are doing, your score will be shown at the bottom of the screen.  <br><br>You will start from 1000 points and can both gain and lose points. <br><br>Note that you will only gain or lose points when you choose between the two options.<br><br>[press any key to continue]';
+      str = 'Your payout in this task is determined by how many points you earn.  You will start from 1000 points and can both gain and lose points depending on the choices you make. <br><br>Note that you only gain or lose points when you make a choice between the two options.<br><br>[press any key to continue]';
       trial.stimulus = guide(str)+current_score();
     }
   }
@@ -910,7 +911,7 @@ window.location.href="../debrief/debrief.html"})
   // STAY OUT OF HERE!!!!! // STAY OUT OF HERE!!!!! //
   var end_screen = {
     type: 'html-keyboard-response',
-    stimulus: 'This is the end of the experiment!  Thank you for taking part!',
+    // stimulus: 'This is the end of the experiment!  Thank you for taking part!',
     choices: [32],
     on_start: function(trial) {
 
@@ -919,6 +920,7 @@ window.location.href="../debrief/debrief.html"})
       dataset = dataset.ignore('internal_node_id');
       dataset = dataset.ignore('responses');
       dataset = dataset.ignore('trial_type');
+      trial.stimulus = "This is the end of the experiment!  You earned " + score + " points.<br><br>Thank you for taking part!<br><br>Press Space to Continue";
       //data = dataset.filterCustom(function(trial){
       //  return trial.block === block;
       //})
