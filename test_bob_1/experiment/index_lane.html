@@ -12,8 +12,8 @@
     <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
 <body><p id="cookie_checker"></p></body>
-<script>
-	if (getCookie("id")==="" || getCookie("exp")===""){
+<script>console.log(getCookie("id")+getCookie("exp"))
+	if (getCookie("id")=="" || getCookie("exp")==""){
 	    document.getElementById("cookie_checker").innerHTML="ID or EXPERIMENT COOKIE ISSUE. Please make sure you are entering this experiment from the correct entrypoint and have 1st party cookies enabled on your computer"
 		      }
 	function send_csv_file(data){
