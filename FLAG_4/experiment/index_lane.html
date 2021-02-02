@@ -11,8 +11,14 @@
     <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
     <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
-  <body></body>
-<script>function send_csv_file(data){
+  <body>
+	  <p id="cookie_checker"></p>
+</body>
+<script>
+	if (getCookie("id")==="" || getCookie("exp")===""){
+	    document.getElementById("cookie_checker").innerHTML="ID or EXPERIMENT COOKIE ISSUE. Please make sure you are entering this experiment from the correct entrypoint and have 1st party cookies enabled on your computer"
+		      }
+	function send_csv_file(data){
     var SID=getCookie("id");
     var exp_name=getCookie("exp");
     var csv_n=csv_name(exp_name,SID);
