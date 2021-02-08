@@ -114,7 +114,7 @@ window.location.href="../debrief/debrief.html"})
   var total_decks;// = 180;
   var resp;
   var sID;
-  var score = 1000;
+  var score = 5000;
 
   function new_deck(str){
     return "<div style='position: fixed; font-size:100px; top: 80%; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; '>"+str+"</div>";
@@ -266,7 +266,7 @@ window.location.href="../debrief/debrief.html"})
     type: 'html-keyboard-response',
     stimulus: 'hi',
     on_start: function(trial) {
-      str = 'In this case the hidden card was worth +200 points, so the variable deck was a better than the sure-thing. <br><br>[press any key to continue]';
+      str = 'In this case the hidden card was worth +200 points, so the variable deck was better than the sure-thing. <br><br>[press any key to continue]';
       trial.stimulus = guide(str)+card_up(200)+empty()+card_up_grey(100);
     }
   }
@@ -344,7 +344,7 @@ window.location.href="../debrief/debrief.html"})
     stimulus: 'hi',
     on_start: function(trial) {
       // str = 'To help you keep track of how well you are doing, your score will be shown at the bottom of the screen.  <br><br>You will start from 1000 points and can both gain and lose points. <br><br>Note that you will only gain or lose points when you choose between the two options.<br><br>[press any key to continue]';
-      str = 'Your payout in this task is determined by how many points you earn.  You will start from 1000 points and can both gain and lose points depending on the choices you make. <br><br>Note that you only gain or lose points when you make a choice between the two options.<br><br>[press any key to continue]';
+      str = 'Your payout in this task is determined by how many points you earn.  You will start from 5000 points and can both gain and lose points depending on the choices you make. <br><br>Note that you only gain or lose points when you make a choice between the two options.<br><br>[press any key to continue]';
       trial.stimulus = guide(str)+current_score();
     }
   }
@@ -705,7 +705,7 @@ window.location.href="../debrief/debrief.html"})
     on_start: function(){
       console.log("does this run?");
       console.log(example_game_counter);
-      score = 1000;
+      score = 5000;
       counter = 1;
       total_decks = test_procedure.timeline_variables.length;
 
