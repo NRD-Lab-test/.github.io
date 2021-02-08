@@ -386,11 +386,12 @@ window.location.href="../debrief/debrief.html"})
     on_start: function(trial){
       var practice = jsPsych.timelineVariable('practice',  true);
       var card = jsPsych.timelineVariable('card',  true);
-      var str = 'The words "New Deck" appear each time there is a new deck made by the person or computer who\'s picture is shown. The task automatically moves on after 1 second.  <br><br>For this practice game, press SPACE BAR to continue.';
+      var str = 'The words "New Deck" will appear each time there is a new deck made by the person or computer who\'s picture is shown. The task automatically moves on after 1 second.  <br><br>For this practice game, press SPACE BAR to continue.';
       trial_counter = 0; // initialize trial counter to 0
       if (practice) {
         //trial.stimulus = "<div style='font-size:120px;'>New Deck<br><br><img src='"+card+"'></img></div>"+guide(str)+game_number();
-        trial.stimulus = new_deck("New Deck")+"<div style='font-size:120px;'><img src='"+card+"'></img></div>"+guide(str)+game_number()+current_score();
+        // trial.stimulus = new_deck("New Deck")+"<div style='font-size:120px;'><img src='"+card+"'></img></div>"+guide(str)+game_number()+current_score();
+        trial.stimulus = "<div style='font-size:120px;'><img src='"+card+"'></img></div>"+guide(str)+game_number()+current_score();
         trial.trial_duration = null;
         trial.choices = [32];
       }
