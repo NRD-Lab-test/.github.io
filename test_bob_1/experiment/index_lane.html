@@ -123,6 +123,10 @@ window.location.href="../debrief/debrief.html"})
   function new_deck(str){
     return "<div style='position: fixed; font-size:100px; top: 80%; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; '>"+str+"</div>";
   }
+  function new_deck_top(str){
+    return "<div style='position: fixed; font-size:100px; top: 0%; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 800px; '>"+str+"</div>";
+  }
+
   function guide(str, color="red"){
     return "<div style='position: fixed; font-size: 18pt; padding: 10px; background-color: white; line-height: 1.5; top: 0; left: 50%; transform: translate(-50%, 0); width: 80%; max-width: 1250px; border-style: solid; border-color: "+color+"'>"+str+"</div>";
   }
@@ -392,7 +396,7 @@ window.location.href="../debrief/debrief.html"})
       }
       else {
         // trial.stimulus = "<div style='font-size:120px;'>New Deck<br><br><img src='"+card+"'></div>"+game_number();
-        trial.stimulus = new_deck("New Deck")+"<div style='font-size:120px;'><img src='"+card+"'></img></div>"+game_number()+current_score();
+        trial.stimulus = new_deck_top("New Deck")+"<div style='font-size:120px;'><img src='"+card+"'></img></div>"+game_number()+current_score();
       }
       trial.data.counter = counter;
       trial.data.block = block;
@@ -942,6 +946,10 @@ window.location.href="../debrief/debrief.html"})
     timeline: timeline,
     max_load_time: 300000, //5 minutes
     preload_images: [
+      "./img/computer_negative.png",
+      "./img/computer_negative2.png",
+      "./img/computer_positive.png",
+      "./img/computer_positive2.png",
       "./img/card1.png",
       "./img/computer_negative.png",
       "./img/computer_negative2.png",
